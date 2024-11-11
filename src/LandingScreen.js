@@ -14,7 +14,7 @@ import { faCommentMedical } from '@fortawesome/free-solid-svg-icons';
 function App() {
   return (
     <div>
-      <nav className="navbar navbar-light navbar-expand-md py-3">
+      <nav className="navbar navbar-dark bg-dark navbar-expand-md py-3">
         <div className="container">
           <a className="navbar-brand d-flex align-items-center" href="#">
             <span className="bs-icon-sm bs-icon-rounded bs-icon-primary d-flex justify-content-center align-items-center me-2 bs-icon">
