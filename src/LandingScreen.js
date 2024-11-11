@@ -194,7 +194,7 @@ function App() {
           <section className="py-4 py-xl-5" id='contact'>
             <div className="container">
               <div className="row">
-                <div className="col"><iframe allowfullscreen frameborder="0" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDfKbBYd-RVuKhOO1AS9cmgn5p616kvnZc&amp;q=%EA%B0%80%EC%B2%9C%EB%8C%80%ED%95%99%EA%B5%90&amp;zoom=12" loading="lazy" width="100%" height="100%"></iframe></div>
+                <div className="col"><iframe allowfullscreen frameborder="0" loading="lazy" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDfKbBYd-RVuKhOO1AS9cmgn5p616kvnZc&amp;q=%EA%B0%80%EC%B2%9C%EB%8C%80%ED%95%99%EA%B5%90+%EA%B8%80%EB%A1%9C%EB%B2%8C%EC%BA%A0%ED%8D%BC%EC%8A%A4&amp;zoom=12" width="100%" height="100%"></iframe></div>
                 <div className="col-md-6 col-xl-4">
                   <div>
                     <form className="p-3 p-xl-4" method="post">
