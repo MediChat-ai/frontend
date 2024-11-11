@@ -11,12 +11,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCommentMedical } from '@fortawesome/free-solid-svg-icons';
 
 
-function App() {
+function LandingScreen() {
   return (
     <div>
       <nav className="navbar navbar-dark bg-dark navbar-expand-md py-3">
         <div className="container">
-          <a className="navbar-brand d-flex align-items-center" href="#">
+          <a className="navbar-brand d-flex align-items-center" href="/">
             <span className="bs-icon-sm bs-icon-rounded bs-icon-primary d-flex justify-content-center align-items-center me-2 bs-icon">
               <FontAwesomeIcon icon={faCommentMedical} />
             </span>
@@ -28,7 +28,7 @@ function App() {
           </button>
           <div className="collapse navbar-collapse" id="navcol-1">
             <ul className="navbar-nav me-auto">
-              <li className="nav-item"><a className="nav-link active" href="#feature">기능</a></li>
+              <li className="nav-item"><a className="nav-link" href="#feature">기능</a></li>
               <li className="nav-item"><a className="nav-link" href="#pricing">가격</a></li>
               <li className="nav-item"><a className="nav-link" href="#contact">건의사항</a></li>
             </ul>
@@ -159,7 +159,7 @@ function App() {
                         <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"></path>
                       </svg></span><span>의료 커뮤니티 사용</span></li>
                     </ul>
-                  </div><a className="btn btn-primary d-block w-100" role="button" href="#">회원 가입</a>
+                  </div><a className="btn btn-primary d-block w-100" role="button" href="/register">회원 가입</a>
                 </div>
               </div>
             </div>
@@ -225,4 +225,4 @@ function App() {
   );
 }
 
-export default App;
+export default LandingScreen;
