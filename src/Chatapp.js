@@ -45,7 +45,21 @@ function ChatApp() {
               </svg>
             </span><span>MediChat</span>
           </a>
-          <button className="btn btn-primary" type="button">Log out</button>
+          <ul className="navbar-nav">
+            <li className="nav-item">
+              <a className="nav-link active" href="#">AI Chat</a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="#">Hospital Info</a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="#">Community</a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="#">Profile</a>
+            </li>
+          </ul>
+          <button className="btn btn-primary ms-auto" type="button">Log out</button>
         </div>
       </nav>
       
