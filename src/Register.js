@@ -57,7 +57,7 @@ const Register = () => {
                     <div class="mb-3"><input class="form-control" type="password" id="pw" name="pw" placeholder="비밀번호" required /></div>
                     <div class="mb-3"><input class="form-control" type="password" id="pw2" name="pw2" placeholder="비밀번호 재입력" required /></div>
                     <div class="mb-3"><button class="btn btn-primary d-block w-100" type="submit">회원 가입</button></div>
-                    <a href="/register"><p class="text-muted">이미 가입하셨나요?</p></a>
+                    <a href="/login"><p class="text-muted">이미 가입하셨나요?</p></a>
                   </form>
                 </div>
               </div>
