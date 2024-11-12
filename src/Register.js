@@ -29,7 +29,7 @@ const Register = () => {
               <li class="nav-item"><a class="nav-link" href="/chat">AI 챗봇</a></li>
               <li class="nav-item"><a class="nav-link" href="/hospital">병원 정보</a></li>
               <li class="nav-item"><a class="nav-link" href="/community">커뮤니티</a></li>
-              <li class="nav-item"><a class="nav-link" href="/profile">프로필</a></li>
+              <li class="nav-item"><a class="nav-link" href="/users/profile">프로필</a></li>
             </ul>
             <a href="/login"><button className="btn btn-secondary me-2" type="button">로그인</button></a>
             <a href="/register"><button className="btn btn-primary" type="button">회원 가입</button></a>
