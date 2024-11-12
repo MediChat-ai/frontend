@@ -9,6 +9,7 @@ import './assets/css/Navbar-With-Button-icons.css';
 import './assets/css/Pricing-Duo-badges.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCommentMedical } from '@fortawesome/free-solid-svg-icons';
+
 const Profile = () => {
   const handleLogout = () => {
     localStorage.removeItem('user');
