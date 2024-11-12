@@ -10,6 +10,10 @@ import './assets/css/Pricing-Duo-badges.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCommentMedical } from '@fortawesome/free-solid-svg-icons';
 const Profile = () => {
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    window.location.href = '/';
+  };
 
   return (
     <div>
@@ -31,7 +35,7 @@ const Profile = () => {
               <li class="nav-item"><a class="nav-link" href="/community">커뮤니티</a></li>
               <li class="nav-item"><a class="nav-link active" href="/users/profile">프로필</a></li>
             </ul>
-            <a href="/users/logout"><button className="btn btn-secondary" type="button">로그아웃</button></a>
+            <button className="btn btn-secondary" type="button" onClick={handleLogout}>로그아웃</button>
           </div>
         </div>
       </nav>
