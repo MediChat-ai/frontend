@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-function ChatApp() {
+const ChatApp = () => {
   const [messages, setMessages] = useState([
     { sender: 'ai', text: 'Hello! How can I assist you today?' }
   ]);

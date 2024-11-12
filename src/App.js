@@ -6,7 +6,7 @@ import NotFound from './NotFound';
 import Login from './Login';
 import Register from './Register';
 
-function App() {
+const App = () => {
   return (
     <div className='App'>
       <BrowserRouter>

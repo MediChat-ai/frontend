@@ -10,7 +10,7 @@ import './assets/css/Pricing-Duo-badges.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCommentMedical } from '@fortawesome/free-solid-svg-icons';
 
-function Login() {
+const Login = () => {
   return (
     <div>
       <nav class="navbar navbar-light navbar-expand-md py-3">

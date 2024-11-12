@@ -11,7 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCommentMedical } from '@fortawesome/free-solid-svg-icons';
 
 
-function LandingScreen() {
+const LandingScreen = () => {
   return (
     <div>
       <nav className="navbar navbar-dark bg-dark navbar-expand-md py-3">
