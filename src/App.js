@@ -4,6 +4,7 @@ import LandingScreen from './LandingScreen';
 import ChatApp from './Chatapp';
 import NotFound from './NotFound';
 import Login from './Login';
+import Register from './Register';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           <Route path="/" element={<LandingScreen />}></Route>
           <Route path="/chat" element={<ChatApp />}></Route>
           <Route path="/login" element={<Login />}></Route>
+          <Route path="/register" element={<Register />}></Route>
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </BrowserRouter>
