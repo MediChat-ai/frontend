@@ -10,33 +10,12 @@ import '../assets/css/Pricing-Duo-badges.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCommentMedical } from '@fortawesome/free-solid-svg-icons';
 import Footer from '../components/Footer';
+import Navbar from '../components/Navbar';
 
 const Login = () => {
   return (
     <div>
-      <nav class="navbar navbar-light navbar-expand-md py-3">
-        <div class="container">
-          <a class="navbar-brand d-flex align-items-center" href="/">
-            <span class="bs-icon-sm bs-icon-rounded bs-icon-primary d-flex justify-content-center align-items-center me-2 bs-icon">
-              <FontAwesomeIcon icon={faCommentMedical} />
-            </span><span>MediChat</span>
-          </a>
-          <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1">
-            <span class="visually-hidden">Toggle navigation</span>
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navcol-1">
-            <ul class="navbar-nav me-auto">
-              <li class="nav-item"><a class="nav-link" href="/chat">AI 챗봇</a></li>
-              <li class="nav-item"><a class="nav-link" href="/hospital">병원 정보</a></li>
-              <li class="nav-item"><a class="nav-link" href="/community">커뮤니티</a></li>
-              <li class="nav-item"><a class="nav-link" href="/users/profile">프로필</a></li>
-            </ul>
-            <a href="/login"><button className="btn btn-secondary me-2" type="button">로그인</button></a>
-            <a href="/register"><button className="btn btn-primary" type="button">회원 가입</button></a>
-          </div>
-        </div>
-      </nav>
+      <Navbar />
       <section class="py-4 py-xl-5">
         <div class="container">
           <div class="row mb-5">
