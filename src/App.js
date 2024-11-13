@@ -1,4 +1,5 @@
-import React from 'react';
+import { React, useEffect, useState, Navigate } from 'react';
+import axios from 'axios';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Landing from './pages/Landing';
 import Chat from './pages/Chat';
@@ -14,6 +15,8 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Landing />}></Route>
           <Route path="/chat" element={<Chat />}></Route>
+          {/* <Route path="/" element={isLoggedIn ? <Navigate to="/chat" /> : <Landing />}></Route> */}
+          {/* <Route path="/chat" element={isLoggedIn ? <Chat /> : <Landing />}></Route> */}
           <Route path="/login" element={<Login />}></Route>
           <Route path="/register" element={<Register />}></Route>
           <Route path="/users/profile" element={<Profile />}></Route>

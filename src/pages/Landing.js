@@ -1,4 +1,3 @@
-import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import 'jquery/src/jquery';
@@ -10,12 +9,41 @@ import '../assets/css/Pricing-Duo-badges.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCommentMedical } from '@fortawesome/free-solid-svg-icons';
 import Footer from '../components/Footer';
+import { React, useEffect, useState, Navigate } from 'react';
+import axios from 'axios';
+import Navbar from '../components/Navbar';
 
+const backendHost = process.env.REACT_APP_BACKEND_HOST;
+const backendPort = process.env.REACT_APP_BACKEND_PORT;
 
 const Landing = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem('user');
+    if (token) {
+      axios.post(`http://${backendHost}:${backendPort}/users/auth`, { token: token })
+        .then(response => {
+          if (response.status == 200) {
+            setIsLoggedIn(true);
+          }
+          else {
+            setIsLoggedIn(false);
+            alert(response.data.error);
+          }
+        })
+        .catch(error => {
+          console.error('토큰 검증 실패:', error);
+          setIsLoggedIn(false);
+        });
+    }
+  }, []);
+  const handleLoginSuccess = () => {
+    setIsLoggedIn(true);
+  };
   return (
     <div>
-      <nav className="navbar navbar-dark bg-dark navbar-expand-md py-3">
+      {/* <nav className="navbar navbar-dark bg-dark navbar-expand-md py-3">
         <div className="container">
           <a className="navbar-brand d-flex align-items-center" href="/">
             <span className="bs-icon-sm bs-icon-rounded bs-icon-primary d-flex justify-content-center align-items-center me-2 bs-icon">
@@ -37,8 +65,8 @@ const Landing = () => {
             <a href="/register"><button className="btn btn-primary" type="button">회원 가입</button></a>
           </div>
         </div>
-      </nav>
-
+      </nav> */}
+      <Navbar />
       <section className="py-4 py-xl-5">
         <div className="container">
           <div className="border rounded border-0 d-flex flex-column justify-content-center align-items-center p-4 py-5" style={{ background: 'linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), linear-gradient(rgba(0,123,255,0.2), rgba(0,123,255,0.2)), url("https://images.pexels.com/photos/40568/medical-appointment-doctor-healthcare-40568.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2") center / cover', height: '500px' }}>
@@ -48,8 +76,14 @@ const Landing = () => {
                   <h1 className="text-uppercase fw-bold mb-3" style={{ color: 'white' }}>빠르고 정확한 의료 상담, AI로 완성하다</h1>
                   <p className="mb-4" style={{ color: 'white' }}>의료 특화 챗봇 MediChat은&nbsp;신뢰할 수 있는 의료 경험을 제공합니다.</p>
                   <div>
-                    <a href="/login"><button className="btn btn-light me-2 fs-5 py-2 px-4" type="button">로그인</button></a>
-                    <a href="/register"><button className="btn btn-primary fs-5 py-2 px-4" type="button">회원 가입</button></a>
+                    {isLoggedIn ? (
+                      <a href="/chat"><button className="btn btn-success fs-5 py-2 px-4" type="button">AI 채팅 바로가기</button></a>
+                    ) : (
+                      <>
+                        <a href="/login"><button className="btn btn-light me-2 fs-5 py-2 px-4" type="button">로그인</button></a>
+                        <a href="/register"><button className="btn btn-primary fs-5 py-2 px-4" type="button">회원 가입</button></a>
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
