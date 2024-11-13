@@ -1,19 +1,19 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import LandingScreen from './LandingScreen';
-import ChatApp from './Chatapp';
-import NotFound from './NotFound';
-import Login from './Login';
-import Register from './Register';
-import Profile from './Profile';
+import Landing from './pages/Landing';
+import Chat from './pages/Chat';
+import NotFound from './pages/404';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Profile from './pages/Profile';
 
 const App = () => {
   return (
     <div className='App'>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<LandingScreen />}></Route>
-          <Route path="/chat" element={<ChatApp />}></Route>
+          <Route path="/" element={<Landing />}></Route>
+          <Route path="/chat" element={<Chat />}></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/register" element={<Register />}></Route>
           <Route path="/users/profile" element={<Profile />}></Route>

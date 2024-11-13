@@ -2,15 +2,14 @@ import React, { useState, useRef, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import 'jquery/src/jquery';
-import './assets/css/Articles-Badges-images.css';
-import './assets/css/Bootstrap-Chat.css';
-import './assets/css/dmp_Inputs_Generic_Phone_Required.css';
-import './assets/css/Navbar-With-Button-icons.css';
-import './assets/css/Pricing-Duo-badges.css';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCommentMedical } from '@fortawesome/free-solid-svg-icons';
+import '../assets/css/Articles-Badges-images.css';
+import '../assets/css/Bootstrap-Chat.css';
+import '../assets/css/dmp_Inputs_Generic_Phone_Required.css';
+import '../assets/css/Navbar-With-Button-icons.css';
+import '../assets/css/Pricing-Duo-badges.css';
+import Navbar from '../components/Navbar';
 
-const ChatApp = () => {
+const Chat = () => {
   const handleLogout = () => {
     localStorage.removeItem('user');
     window.location.href = '/';
@@ -50,29 +49,7 @@ const ChatApp = () => {
 
   return (
     <div className="d-flex flex-column vh-100">
-      <nav class="navbar navbar-light navbar-expand-md py-3">
-        <div class="container">
-          <a class="navbar-brand d-flex align-items-center" href="/">
-            <span class="bs-icon-sm bs-icon-rounded bs-icon-primary d-flex justify-content-center align-items-center me-2 bs-icon">
-              <FontAwesomeIcon icon={faCommentMedical} />
-            </span><span>MediChat</span>
-          </a>
-          <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1">
-            <span class="visually-hidden">Toggle navigation</span>
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navcol-1">
-            <ul class="navbar-nav me-auto">
-              <li class="nav-item"><a class="nav-link active" href="/chat">AI 챗봇</a></li>
-              <li class="nav-item"><a class="nav-link" href="/hospital">병원 정보</a></li>
-              <li class="nav-item"><a class="nav-link" href="/community">커뮤니티</a></li>
-              <li class="nav-item"><a class="nav-link" href="/users/profile">프로필</a></li>
-            </ul>
-            <button className="btn btn-secondary" type="button" onClick={handleLogout}>로그아웃</button>
-          </div>
-        </div>
-      </nav>
-
+      <Navbar />
       <div className="chat-container container d-flex flex-column flex-grow-1 position-relative" style={{ maxWidth: '600px' }}>
         <div
           className="chat-box p-3 bg-light flex-grow-1"
@@ -113,4 +90,4 @@ const ChatApp = () => {
   );
 }
 
-export default ChatApp;
+export default Chat;

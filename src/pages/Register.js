@@ -2,13 +2,14 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import 'jquery/src/jquery';
-import './assets/css/Articles-Badges-images.css';
-import './assets/css/Bootstrap-Chat.css';
-import './assets/css/dmp_Inputs_Generic_Phone_Required.css';
-import './assets/css/Navbar-With-Button-icons.css';
-import './assets/css/Pricing-Duo-badges.css';
+import '../assets/css/Articles-Badges-images.css';
+import '../assets/css/Bootstrap-Chat.css';
+import '../assets/css/dmp_Inputs_Generic_Phone_Required.css';
+import '../assets/css/Navbar-With-Button-icons.css';
+import '../assets/css/Pricing-Duo-badges.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCommentMedical } from '@fortawesome/free-solid-svg-icons';
+import Footer from '../components/Footer';
 
 const Register = () => {
   return (
@@ -64,16 +65,7 @@ const Register = () => {
             </div>
           </div>
         </div>
-        <footer className="text-center bg-dark">
-          <div className="container text-white py-4 py-lg-5">
-            <ul className="list-inline">
-              <li className="list-inline-item me-4"><a className="link-light" href="https://is.gd/f5I7lE" target="_blank">School</a></li>
-              <li className="list-inline-item me-4"><a className="link-light" href="https://github.com/medichat-ai" target="_blank">GitHub</a></li>
-              <li className="list-inline-item"><a className="link-light" href="https://runpod.io" target="_blank">GPU Hosting</a></li>
-            </ul>
-            <p className="mb-0" style={{ color: 'white' }}>Copyright © 2024 MediChat</p>
-          </div>
-        </footer>
+        <Footer />
       </section>
     </div>
   )
