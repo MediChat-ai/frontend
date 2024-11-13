@@ -11,7 +11,7 @@ import Navbar from '../components/Navbar';
 
 const Chat = () => {
   const handleLogout = () => {
-    localStorage.removeItem('user');
+    localStorage.removeItem('token');
     window.location.href = '/';
   };
 

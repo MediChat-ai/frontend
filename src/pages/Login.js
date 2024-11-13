@@ -29,7 +29,7 @@ const Login = () => {
       }, { validateStatus: (status) => status !== 500 });
 
       if (response.status == 200) {
-        localStorage.setItem('user', response.data.token);
+        localStorage.setItem('token', response.data.token);
         alert('로그인 성공!');
         window.location.href = '/';
       }

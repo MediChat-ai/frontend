@@ -47,7 +47,7 @@ const Register = () => {
         }, { validateStatus: (status) => status !== 500 });
 
         if (response.status === 200) {
-          localStorage.setItem('user', response.data.token);
+          localStorage.setItem('token', response.data.token);
           window.location.href = '/';
         }
         else if (response.status === 401)

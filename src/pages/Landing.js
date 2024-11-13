@@ -20,7 +20,7 @@ const Landing = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem('user');
+    const token = localStorage.getItem('token');
     if (token) {
       axios.post(`http://${backendHost}:${backendPort}/users/auth`, { token: token })
         .then(response => {

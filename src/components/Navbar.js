@@ -12,11 +12,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCommentMedical } from '@fortawesome/free-solid-svg-icons';
 
 const Navbar = () => {
-  const isLoggedIn = !!localStorage.getItem('user');
+  const isLoggedIn = localStorage.getItem('token');
 
   const handleLogout = () => {
-    localStorage.removeItem('user');
-    localStorage.removeItem('jwtToken');
+    localStorage.removeItem('token');
     window.location.href = '/';
   };
 
