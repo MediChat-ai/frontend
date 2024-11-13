@@ -15,7 +15,7 @@ const backendHost = process.env.REACT_APP_BACKEND_HOST;
 const backendPort = process.env.REACT_APP_BACKEND_PORT;
 
 const Login = () => {
-  const [username, setUsername] = useState("");
+  const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const handleLogin = async (e) => {
@@ -24,7 +24,7 @@ const Login = () => {
 
     try {
       const response = await axios.post(`http://${backendHost}:${backendPort}/users/login`, {
-        user_id: username,
+        user_id: userId,
         pw: password,
       }, { validateStatus: (status) => status !== 500 });
 
@@ -60,7 +60,7 @@ const Login = () => {
                     <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"></path>
                   </svg></div>
                   <form className="text-center" method="post" onSubmit={handleLogin}>
-                    <div className="mb-3"><input className="form-control" type="text" placeholder="ID" value={username} onChange={(e) => setUsername(e.target.value)} required /></div>
+                    <div className="mb-3"><input className="form-control" type="text" placeholder="ID" value={userId} onChange={(e) => setUserId(e.target.value)} required /></div>
                     <div className="mb-3"><input className="form-control" type="password" placeholder="비밀번호" value={password} onChange={(e) => setPassword(e.target.value)} required /></div>
                     <div className="mb-3"><button className="btn btn-primary d-block w-100" type="submit">로그인</button></div>
                     <a href="/register"><p className="text-muted">MediChat이 처음이신가요?</p></a>
