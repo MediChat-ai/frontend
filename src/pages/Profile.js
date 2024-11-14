@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import 'jquery/src/jquery';
@@ -7,12 +8,40 @@ import '../assets/css/Bootstrap-Chat.css';
 import '../assets/css/dmp_Inputs_Generic_Phone_Required.css';
 import '../assets/css/Navbar-With-Button-icons.css';
 import '../assets/css/Pricing-Duo-badges.css';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCommentMedical } from '@fortawesome/free-solid-svg-icons';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 
+const backendHost = process.env.REACT_APP_BACKEND_HOST;
+const backendPort = process.env.REACT_APP_BACKEND_PORT;
+
 const Profile = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    console.log(token);
+    if (token) {
+      axios.post(`http://${backendHost}:${backendPort}/users/auth`, { token: token })
+        .then(response => {
+          if (response.status == 200) {
+            setIsLoggedIn(true);
+          }
+          else {
+            setIsLoggedIn(false);
+            alert(response.data.error);
+          }
+        })
+        .catch(error => {
+          console.error('토큰 검증 실패:', error);
+          setIsLoggedIn(false);
+        });
+    }
+    else {
+      alert('로그인이 필요합니다.');
+      window.location.href = '/';
+    }
+  }, []);
+
   const handleLogout = () => {
     localStorage.removeItem('token');
     window.location.href = '/';
