@@ -48,9 +48,26 @@ const Profile = () => {
     }
   }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    window.location.href = '/';
+  const handleSubmit = (event) => {
+    event.preventDefault(); // 기본 폼 제출 동작 방지
+    const token = localStorage.getItem('token');
+
+    axios.post(`http://${backendHost}:${backendPort}/users/change/username`, {
+      token: token,
+      new_username: document.getElementById('user_name').value
+    })
+      .then(response => {
+        if (response.status === 200) {
+          alert('사용자 이름이 변경되었습니다.');
+          window.location.reload();
+        } else {
+          alert(response.data.error);
+        }
+      })
+      .catch(error => {
+        console.error('사용자 이름 변경 실패:', error);
+        alert('사용자 이름 변경 중 오류가 발생했습니다.');
+      });
   };
 
   return (
@@ -63,7 +80,7 @@ const Profile = () => {
             <p class="text-primary m-0 fw-bold">사용자 설정</p>
           </div>
           <div class="card-body">
-            <form>
+            <form onSubmit={handleSubmit}>
               <div class="row" style={{ marginBottom: '25px', textAlign: 'left' }}>
                 <div class="col-sm-4 col-md-4 col-lg-3 col-xl-2 col-xxl-2" style={{ display: 'inline', textAlign: 'center', marginBottom: '25px' }}><img class="rounded-circle mb-3 mt-4 img-fluid" src="https://static.vecteezy.com/system/resources/thumbnails/002/318/271/small/user-profile-icon-free-vector.jpg" style={{ display: 'inline', maxHeight: '110px' }} /><br /><button class="btn btn-primary btn-sm" id="photoBtn" type="button">사진 변경</button></div>
                 <div class="col-sm-8 col-md-8 col-lg-9 col-xl-10 col-xxl-10 align-self-center">
@@ -72,7 +89,7 @@ const Profile = () => {
                       <div class="mb-3"><label class="form-label" for="user_id"><strong>ID</strong></label><input class="form-control" type="text" id="user_id" name="user_id" value={userId} disabled /></div>
                     </div>
                     <div class="col-md-12 text-start">
-                      <div class="mb-3"><label class="form-label" for="user_name"><strong>닉네임</strong></label><input class="form-control" type="text" id="user_name" name="user_name" value={username} /></div>
+                      <div class="mb-3"><label class="form-label" for="user_name"><strong>닉네임</strong></label><input class="form-control" type="text" id="user_name" name="user_name" placeholder={username} required /></div>
                     </div>
                   </div>
                 </div>
