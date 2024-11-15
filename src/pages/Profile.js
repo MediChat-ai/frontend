@@ -18,7 +18,6 @@ const Profile = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userId, setUserId] = useState('');
   const [username, setUsername] = useState('');
-  const [profilePhotoURI, setProfilePhotoURI] = useState('');
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -30,7 +29,6 @@ const Profile = () => {
             setIsLoggedIn(true);
             setUserId(response.data.account.user_id);
             setUsername(response.data.account.user_name);
-            // setProfilePhotoURI(response.data.profile_photo);
           }
           else {
             setIsLoggedIn(false);
@@ -49,7 +47,7 @@ const Profile = () => {
   }, []);
 
   const handleSubmit = (event) => {
-    event.preventDefault(); // 기본 폼 제출 동작 방지
+    event.preventDefault();
     const token = localStorage.getItem('token');
 
     axios.post(`http://${backendHost}:${backendPort}/users/change/username`, {
@@ -82,7 +80,6 @@ const Profile = () => {
           <div class="card-body">
             <form onSubmit={handleSubmit}>
               <div class="row" style={{ marginBottom: '25px', textAlign: 'left' }}>
-                <div class="col-sm-4 col-md-4 col-lg-3 col-xl-2 col-xxl-2" style={{ display: 'inline', textAlign: 'center', marginBottom: '25px' }}><img class="rounded-circle mb-3 mt-4 img-fluid" src="https://static.vecteezy.com/system/resources/thumbnails/002/318/271/small/user-profile-icon-free-vector.jpg" style={{ display: 'inline', maxHeight: '110px' }} /><br /><button class="btn btn-primary btn-sm" id="photoBtn" type="button">사진 변경</button></div>
                 <div class="col-sm-8 col-md-8 col-lg-9 col-xl-10 col-xxl-10 align-self-center">
                   <div class="row">
                     <div class="col-md-12 text-start">
@@ -119,7 +116,7 @@ const Profile = () => {
       </div>
       <Footer />
     </div>
-  )
-}
+  );
+};
 
 export default Profile;
