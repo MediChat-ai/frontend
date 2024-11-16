@@ -28,7 +28,7 @@ const Register = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
     setError(null);
-    if (!validateUsername(userId) && !validateUsername(username))
+    if (!validateUsername(userId) || !validateUsername(username))
       alert('아이디와 닉네임은 영문자와 숫자만 가능합니다.');
     else {
       if (password === passwordCheck) {
