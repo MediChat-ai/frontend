@@ -14,6 +14,11 @@ import Navbar from '../components/Navbar';
 const backendHost = process.env.REACT_APP_BACKEND_HOST;
 const backendPort = process.env.REACT_APP_BACKEND_PORT;
 
+const validateUsername = username => {
+  const regex = /^[a-zA-Z0-9]+$/; // 영문자와 숫자만 허용
+  return regex.test(username);
+}
+
 const Register = () => {
   const [userId, setUserId] = useState("");
   const [username, setUsername] = useState("");
@@ -23,43 +28,47 @@ const Register = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
     setError(null);
-    if (password === passwordCheck) {
-      try {
-        const response = await axios.post(`http://${backendHost}:${backendPort}/users/register`, {
-          user_id: userId,
-          user_name: username,
-          pw: password,
-        }, { validateStatus: (status) => status !== 500 });
+    if (!validateUsername(userId) && !validateUsername(username))
+      alert('아이디와 닉네임은 영문자와 숫자만 가능합니다.');
+    else {
+      if (password === passwordCheck) {
+        try {
+          const response = await axios.post(`http://${backendHost}:${backendPort}/users/register`, {
+            user_id: userId,
+            user_name: username,
+            pw: password,
+          }, { validateStatus: (status) => status !== 500 });
 
-        if (response.status === 200)
-          alert('회원가입 성공!');
-        else if (response.status === 401)
-          alert(response.data.error);
-      } catch (err) {
-        alert(err);
-        setError('회원가입에 실패했습니다. 사용자 ID와 비밀번호를 확인하세요.');
-        console.error('회원가입 에러:', err);
-      }
-      try {
-        const response = await axios.post(`http://${backendHost}:${backendPort}/users/login`, {
-          user_id: userId,
-          pw: password,
-        }, { validateStatus: (status) => status !== 500 });
-
-        if (response.status === 200) {
-          localStorage.setItem('token', response.data.token);
-          window.location.href = '/';
+          if (response.status === 200)
+            alert('회원가입 성공!');
+          else if (response.status === 401)
+            alert(response.data.error);
+        } catch (err) {
+          alert(err);
+          setError('회원가입에 실패했습니다. 사용자 ID와 비밀번호를 확인하세요.');
+          console.error('회원가입 에러:', err);
         }
-        else if (response.status === 401)
-          alert(response.data.error);
-      } catch (err) {
-        alert(err);
-        setError('로그인에 실패했습니다. 사용자 ID와 비밀번호를 확인하세요.');
-        console.error('로그인 에러:', err);
+        try {
+          const response = await axios.post(`http://${backendHost}:${backendPort}/users/login`, {
+            user_id: userId,
+            pw: password,
+          }, { validateStatus: (status) => status !== 500 });
+
+          if (response.status === 200) {
+            localStorage.setItem('token', response.data.token);
+            window.location.href = '/';
+          }
+          else if (response.status === 401)
+            alert(response.data.error);
+        } catch (err) {
+          alert(err);
+          setError('로그인에 실패했습니다. 사용자 ID와 비밀번호를 확인하세요.');
+          console.error('로그인 에러:', err);
+        }
       }
+      else
+        alert('비밀번호가 일치하지 않습니다.');
     }
-    else
-      alert('비밀번호가 일치하지 않습니다.');
   };
   return (
     <div>

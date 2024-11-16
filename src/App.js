@@ -10,12 +10,14 @@ import Profile from './pages/Profile';
 import Community from './pages/Community';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 
-const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+const clientid = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+
+console.log(clientid);
 
 const App = () => {
   return (
     <div className='App'>
-      <GoogleOAuthProvider clientId='16007817766-4t7ag4g6l14hgke4n99tmaefbioba20b.apps.googleusercontent.com'>
+      <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Landing />}></Route>
