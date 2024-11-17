@@ -28,14 +28,15 @@ const Register = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
     setError(null);
-    if (!validateUsername(userId) || !validateUsername(username))
-      alert('아이디와 닉네임은 영문자와 숫자만 가능합니다.');
+    if (!validateUsername(userId))
+      alert('아이디는 영문자와 숫자만 가능합니다.');
     else {
       if (password === passwordCheck) {
         try {
           const response = await axios.post(`http://${backendHost}:${backendPort}/users/register`, {
             user_id: userId,
             user_name: username,
+            auth_provider: 'local',
             pw: password,
           }, { validateStatus: (status) => status !== 500 });
 

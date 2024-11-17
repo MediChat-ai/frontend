@@ -56,14 +56,15 @@ const Login = () => {
           const response = await axios.post(`http://${backendHost}:${backendPort}/users/register`, {
             user_id: userInfoResponse.data.email,
             user_name: userInfoResponse.data.name,
-            pw: '1',
+            auth_provider: 'google',
+            pw: process.env.REACT_APP_OAUTH_PW,
           }, { validateStatus: (status) => status !== 500 });
           if (response.status === 200) { // 소셜 계정이 db에 없는 경우
             alert('회원가입 성공!');
             try {
               const response = await axios.post(`http://${backendHost}:${backendPort}/users/login`, {
                 user_id: userInfoResponse.data.email,
-                pw: '1',
+                pw: process.env.REACT_APP_OAUTH_PW,
               }, { validateStatus: (status) => status !== 500 });
               if (response.status == 200) {
                 localStorage.setItem('token', response.data.token);
@@ -81,7 +82,7 @@ const Login = () => {
             try {
               const response = await axios.post(`http://${backendHost}:${backendPort}/users/login`, {
                 user_id: userInfoResponse.data.email,
-                pw: '1',
+                pw: process.env.REACT_APP_OAUTH_PW,
               }, { validateStatus: (status) => status !== 500 });
               if (response.status == 200) {
                 localStorage.setItem('token', response.data.token);
