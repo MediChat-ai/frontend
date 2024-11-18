@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
+import { jwtDecode } from 'jwt-decode';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import 'jquery/src/jquery';
@@ -27,8 +28,9 @@ const Profile = () => {
         .then(response => {
           if (response.status == 200) {
             setIsLoggedIn(true);
-            setUserId(response.data.account.user_id);
-            setUsername(response.data.account.user_name);
+            const decodedToken = jwtDecode(token);
+            setUserId(decodedToken.user_id);
+            setUsername(decodedToken.user_name);
           }
           else {
             setIsLoggedIn(false);
