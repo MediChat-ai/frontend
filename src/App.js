@@ -7,7 +7,7 @@ import NotFound from './pages/404';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
-import Community from './pages/Community';
+import Community from './pages/Community_boards';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 
 const clientid = process.env.REACT_APP_GOOGLE_CLIENT_ID;

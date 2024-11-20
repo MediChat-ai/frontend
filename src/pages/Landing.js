@@ -22,7 +22,7 @@ const Landing = () => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      axios.post(`http://${backendHost}:${backendPort}/users/auth`, { token: token })
+      axios.get(`http://${backendHost}:${backendPort}/users/auth`, { headers: { 'Authorization': `Bearer ${token}` } })
         .then(response => {
           if (response.status == 200) {
             setIsLoggedIn(true);
