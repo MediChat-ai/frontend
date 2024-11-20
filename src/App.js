@@ -7,8 +7,12 @@ import NotFound from './pages/404';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
-import Community from './pages/Community_boards';
+// import Community_boards from './pages/Community_boards';
+// import Community_posts from './pages/Community_posts';
+// import Community from './pages/Community';
 import { GoogleOAuthProvider } from '@react-oauth/google';
+import BoardList from './pages/Community/BoardList';
+import PostList from './pages/Community/PostList';
 
 const clientid = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
@@ -26,7 +30,9 @@ const App = () => {
             {/* <Route path="/chat" element={isLoggedIn ? <Chat /> : <Landing />}></Route> */}
             <Route path="/login" element={<Login />}></Route>
             <Route path="/register" element={<Register />}></Route>
-            <Route path="/community" element={<Community />}></Route>
+            <Route path="/community" element={<BoardList />}></Route>
+            {/* <Route path="/community" element={<Community_boards />}></Route> */}
+            <Route path="/community/:_id" element={<PostList />}></Route>
             <Route path="/users/profile" element={<Profile />}></Route>
             <Route path="*" element={<NotFound />}></Route>
           </Routes>

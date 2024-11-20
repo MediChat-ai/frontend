@@ -5,11 +5,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCommentMedical } from '@fortawesome/free-solid-svg-icons';
-import BoardList from './routes/BoardList';
-import PostList from './routes/PostList';
-import SinglePost from './routes/SinglePost';
-import NewPostForm from './routes/NewPostForm';
-import ManageBoards from './routes/ManageBoards';
+import BoardList from './Community/BoardList';
+import PostList from './Community/PostList';
+import SinglePost from './Community/SinglePost';
+import NewPostForm from './Community/NewPostForm';
+// import ManageBoards from './routes/ManageBoards';
 
 // Navbar 컴포넌트: 상단 네비게이션 바를 구성합니다.
 const Navbar = () => {
@@ -62,7 +62,7 @@ const Community = ({ token }) => {
                 <Route path="/board/:boardName" element={<PostList token={token} />} />
                 <Route path="/board/:boardName/post/:postId" element={<SinglePost token={token} />} />
                 <Route path="/board/:boardName/new" element={<NewPostForm token={token} />} />
-                <Route path="/manage-boards" element={<ManageBoards token={token} />} />
+                {/* <Route path="/manage-boards" element={<ManageBoards token={token} />} /> */}
             </Routes>
         </Router>
     );
