@@ -11,7 +11,6 @@ const PostList = () => {
 	const [posts, setPosts] = useState([]);
 	const [boardName, setBoardName] = useState('');
 
-	console.log(_id)
 	const token = localStorage.getItem('token');
 
 	useEffect(() => {
@@ -38,6 +37,10 @@ const PostList = () => {
 			<div class="container">
 				<div class="row">
 					<h2>{boardName}</h2>
+					<br />
+					<div class="col-md-12">
+						<a href={`/community/${_id}/new`}><button type="button" class="btn btn-primary">새 글 작성</button></a>
+					</div>
 					<br />
 					<div class="col-md-12"><table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
 						<thead>

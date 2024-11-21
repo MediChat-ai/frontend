@@ -13,6 +13,7 @@ import Profile from './pages/Profile';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import BoardList from './pages/Community/BoardList';
 import PostList from './pages/Community/PostList';
+import WritePost from './pages/Community/WritePost';
 
 const clientid = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
@@ -33,6 +34,7 @@ const App = () => {
             <Route path="/community" element={<BoardList />}></Route>
             {/* <Route path="/community" element={<Community_boards />}></Route> */}
             <Route path="/community/:_id" element={<PostList />}></Route>
+            <Route path="/community/:_id/new" element={<WritePost />}></Route>
             <Route path="/users/profile" element={<Profile />}></Route>
             <Route path="*" element={<NotFound />}></Route>
           </Routes>

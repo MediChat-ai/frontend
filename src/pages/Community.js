@@ -8,7 +8,7 @@ import { faCommentMedical } from '@fortawesome/free-solid-svg-icons';
 import BoardList from './Community/BoardList';
 import PostList from './Community/PostList';
 import SinglePost from './Community/SinglePost';
-import NewPostForm from './Community/NewPostForm';
+import NewPostForm from './Community/WritePost';
 // import ManageBoards from './routes/ManageBoards';
 
 // Navbar 컴포넌트: 상단 네비게이션 바를 구성합니다.
