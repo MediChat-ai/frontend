@@ -1,0 +1,86 @@
+.post-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.post-title {
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 1rem;
+}
+
+.post-date {
+  white-space: nowrap;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.table-striped td a {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 1100px;
+}
+
+@media (max-width: 1399px) {
+  .table-striped td a {
+    max-width: 850px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .table-striped td a {
+    max-width: 770px;
+  }
+}
+
+@media (max-width: 991px) {
+  .table-striped td a {
+    max-width: 540px;
+  }
+}
+
+@media (max-width: 767px) {
+  .table-striped td a {
+    max-width: 340px;
+  }
+}
+
+@media (max-width: 505px) {
+  .table-striped td a {
+    max-width: 280px;
+  }
+}
+
+@media (max-width: 445px) {
+  .table-striped td a {
+    max-width: 200px;
+  }
+}
+
+@media (max-width: 365px) {
+  .table-striped td a {
+    max-width: 170px;
+  }
+}
+
+@media (max-width: 335px) {
+  .table-striped td a {
+    max-width: 150px;
+  }
+}
+
+@media (max-width: 315px) {
+  .table-striped td a {
+    max-width: 100px;
+  }
+}
+
+

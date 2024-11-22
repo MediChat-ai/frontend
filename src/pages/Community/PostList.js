@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import Navbar from '../../components/Navbar';
+import '../../assets/css/PostList.css'
 
 const backendHost = process.env.REACT_APP_BACKEND_HOST;
 const backendPort = process.env.REACT_APP_BACKEND_PORT;
@@ -33,51 +34,66 @@ const PostList = () => {
 	return (
 		<div>
 			<Navbar />
-			<div class="container">
-				<div class="row">
+			<div className="container">
+				<div className="row">
 					<h2>{boardName}</h2>
 					<br />
-					<div class="col-md-12">
-						<a href={`/community/${_id}/new`}><button type="button" class="btn btn-primary">새 글 작성</button></a>
+					<div className="col-md-12">
+						<a href={`/community/${_id}/new`}>
+							<button type="button" className="btn btn-primary">새 글 작성</button>
+						</a>
 					</div>
 					<br />
-					<div class="col-md-12"><table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
-						<thead>
-							<tr>
-								<th>제목</th>
-								<th>조회 수</th>
-								<th>작성일</th>
-							</tr>
-						</thead>
-						<tbody>
-							{posts.map((post) => (
-								<tr key={post._id}>
-									<td><a href={`/community/${_id}/${post._id}`}>{post.post_title}</a></td>
-									<td>{post.view_count}</td>
-									<td>
-										{(() => {
-											const postDate = new Date(post.created_at);
-											const today = new Date();
-
-											const postYear = postDate.getFullYear();
-											const postMonth = postDate.getMonth();
-											const postDay = postDate.getDate();
-
-											const todayYear = today.getFullYear();
-											const todayMonth = today.getMonth();
-											const todayDay = today.getDate();
-
-											if (postYear === todayYear && postMonth === todayMonth && postDay === todayDay) {
-												return postDate.toLocaleTimeString('ko-KR', { timeZone: 'Asia/Seoul', hour: '2-digit', minute: '2-digit', hour12: false });
-											} else {
-												return postDate.toLocaleDateString('ko-KR', { timeZone: 'Asia/Seoul', month: '2-digit', day: '2-digit' });
-											}
-										})()}
-									</td>
+					<div className="col-md-12">
+						<table id="example" className="table table-striped table-bordered" cellspacing="0" width="100%">
+							<thead>
+								<tr>
+									<th>제목</th>
+									<th>조회 수</th>
+									<th>작성일</th>
 								</tr>
-							))}
-						</tbody>
-					</table></div>
+							</thead>
+							<tbody>
+								{posts.map((post) => (
+									<tr key={post._id}>
+										<td>
+											<a
+												href={`/community/${_id}/${post._id}`}
+												title={post.post_title}
+											>
+												{post.post_title}
+											</a>
+										</td>
+										<td>{post.view_count}</td>
+										<td>
+											{(() => {
+												const postDate = new Date(post.created_at);
+												const today = new Date();
+	
+												const isToday = 
+													postDate.getFullYear() === today.getFullYear() &&
+													postDate.getMonth() === today.getMonth() &&
+													postDate.getDate() === today.getDate();
+	
+												return isToday
+													? postDate.toLocaleTimeString('ko-KR', {
+															timeZone: 'Asia/Seoul',
+															hour: '2-digit',
+															minute: '2-digit',
+															hour12: false,
+														})
+													: postDate.toLocaleDateString('ko-KR', {
+															timeZone: 'Asia/Seoul',
+															month: '2-digit',
+															day: '2-digit',
+														});
+											})()}
+										</td>
+									</tr>
+								))}
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
 		</div>
