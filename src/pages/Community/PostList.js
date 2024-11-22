@@ -21,9 +21,8 @@ const PostList = () => {
 						Authorization: `Bearer ${token}`,
 					},
 				});
-				setPosts(response.data.posts);
+				setPosts(response.data.posts.reverse());
 				setBoardName(response.data.board_name);
-				console.log(response.data.posts)
 			} catch (error) {
 				console.error('게시물을 불러오는 중 오류가 발생했습니다:', error);
 			}
@@ -55,7 +54,26 @@ const PostList = () => {
 								<tr key={post._id}>
 									<td><a href={`/community/${_id}/${post._id}`}>{post.post_title}</a></td>
 									<td>{post.view_count}</td>
-									<td>{post.created_at}</td>
+									<td>
+										{(() => {
+											const postDate = new Date(post.created_at);
+											const today = new Date();
+
+											const postYear = postDate.getFullYear();
+											const postMonth = postDate.getMonth();
+											const postDay = postDate.getDate();
+
+											const todayYear = today.getFullYear();
+											const todayMonth = today.getMonth();
+											const todayDay = today.getDate();
+
+											if (postYear === todayYear && postMonth === todayMonth && postDay === todayDay) {
+												return postDate.toLocaleTimeString('ko-KR', { timeZone: 'Asia/Seoul', hour: '2-digit', minute: '2-digit', hour12: false });
+											} else {
+												return postDate.toLocaleDateString('ko-KR', { timeZone: 'Asia/Seoul', month: '2-digit', day: '2-digit' });
+											}
+										})()}
+									</td>
 								</tr>
 							))}
 						</tbody>
