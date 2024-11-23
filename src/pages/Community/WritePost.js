@@ -15,6 +15,12 @@ const WritePost = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    if (!title.trim() || !content.trim()) {
+        alert('제목과 내용은 필수 입력 사항입니다.');
+        return;
+    }
+
     try {
       const response = await axios.post(`http://${backendHost}:${backendPort}/community/writePost`, {
         board_id: _id,

@@ -1,0 +1,37 @@
+.form-control-borderless {
+  border: none;
+}
+
+.form-control-borderless:hover,
+.form-control-borderless:active,
+.form-control-borderless:focus {
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
+.no-wrap {
+  white-space: nowrap;
+  /* 텍스트를 한 줄로 유지 */
+}
+
+/* 반응형에서 버튼 크기 유지 */
+.btn-lg.no-wrap {
+  display: inline-block;
+  /* inline-block으로 컨텐츠 크기에 맞게 조정 */
+  min-width: 80px;
+  /* 버튼 최소 크기 지정 */
+  padding: 0.5rem 1rem;
+  /* 버튼 내 여백 조정 */
+  text-align: center;
+  /* 텍스트 가운데 정렬 */
+}
+
+.input-height {
+  height: 30px; /* 원하는 높이로 조정 */
+  padding: 5px;
+}
+
+.btn {
+  height: auto; /* 버튼 높이와 균형 유지 */
+}
