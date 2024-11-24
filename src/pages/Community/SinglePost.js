@@ -192,7 +192,12 @@ const SinglePost = () => {
                 autoComplete="off"
               />
             ) : (
-              <h2>{post.post_title}</h2>
+              <div>
+                <h2>{post.post_title}</h2>
+                <div className="text-muted">
+                  작성자: {post.author_name} | 작성 시각: {new Date(post.created_at).toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' })}
+                </div>
+              </div>
             )}
             <div>
               {isAuthor && (
