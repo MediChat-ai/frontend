@@ -16,10 +16,9 @@ import PostList from './pages/Community/PostList';
 import WritePost from './pages/Community/WritePost';
 import SinglePost from './pages/Community/SinglePost';
 import Hosptial from './pages/Hospital';
+import NaverCallback from './pages/NaverCallback';
 
 const clientid = process.env.REACT_APP_GOOGLE_CLIENT_ID;
-
-console.log(clientid);
 
 const App = () => {
   return (
@@ -32,6 +31,7 @@ const App = () => {
             {/* <Route path="/" element={isLoggedIn ? <Navigate to="/chat" /> : <Landing />}></Route> */}
             {/* <Route path="/chat" element={isLoggedIn ? <Chat /> : <Landing />}></Route> */}
             <Route path="/login" element={<Login />}></Route>
+            <Route path="/users/login/naver/callback" element={<NaverCallback />}></Route>
             <Route path="/register" element={<Register />}></Route>
             <Route path="/community" element={<BoardList />}></Route>
             {/* <Route path="/community" element={<Community_boards />}></Route> */}

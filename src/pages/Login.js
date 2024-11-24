@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import { useGoogleLogin, GoogleLogin } from '@react-oauth/google';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -16,9 +16,20 @@ const backendHost = process.env.REACT_APP_BACKEND_HOST;
 const backendPort = process.env.REACT_APP_BACKEND_PORT;
 
 const Login = () => {
+  const { naver } = window; 
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+  const CLIENT_ID = "Rs60Wd69Nt1mWtUXwGSI"; // 네이버 개발자센터에서 발급받은 Client ID
+  const REDIRECT_URI = "http://localhost:3000/users/login/naver/callback"; // 등록된 Redirect URI
+  const STATE = Math.random().toString(36); // CSRF 공격 방지용 State 값
+
+  useEffect(() => {
+    naverLogin.init();
+    console.log("init!");
+    // getUser();
+  }, []);
+
   const handleLogin = async (e) => {
     e.preventDefault();
     setError(null);
@@ -59,6 +70,24 @@ const Login = () => {
   const handleFailure = (error) => {
     alert('구글 로그인 실패:', error);
   };
+
+  const handleNaverLogin = () => {
+    const loginUrl = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(
+      REDIRECT_URI
+    )}&state=${STATE}`;
+    window.location.href = loginUrl; // 네이버 인증 페이지로 이동
+  };
+
+  const naverLogin = new naver.LoginWithNaverId({
+    clientId: CLIENT_ID,
+    callbackUrl: REDIRECT_URI,
+    isPopup: 0,
+    loginButton: {
+      color: "green",
+      type: 3,
+      height: 50,
+    },
+  });
 
   return (
     <div>
@@ -110,11 +139,7 @@ const Login = () => {
                           <img src="https://cdn-icons-png.flaticon.com/512/2111/2111466.png" alt="카카오 로고" style={{ width: '30px' }} />
                         </button>
                       </a>
-                      <a href="/auth/naver">
-                        <button className="btn d-flex align-items-center justify-content-center rounded-circle" style={{ width: '50px', height: '50px', backgroundColor: '#00D070' }}>
-                          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTuQNoYnNWFI-GGHH9bsaKwU6Q4IUQYO2fpQw&s" alt="네이버 로고" style={{ width: '35px' }} />
-                        </button>
-                      </a>
+                      <div id="naverIdLogin" />
                     </div>
                   </div>
                 </div>

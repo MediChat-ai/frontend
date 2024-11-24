@@ -58,15 +58,16 @@ const Profile = () => {
     })
       .then(response => {
         if (response.status === 200) {
-          alert('사용자 이름이 변경되었습니다.');
-          window.location.reload();
+          alert('사용자 이름이 변경되었습니다. 원활한 사용을 위해 로그아웃 후 다시 로그인 해 주세요.');
+          localStorage.removeItem('token');
+          window.location.href = '/';
         } else {
           alert(response.data.error);
         }
       })
       .catch(error => {
         console.error('사용자 이름 변경 실패:', error);
-        alert('사용자 이름 변경 중 오류가 발생했습니다.');
+        alert('사용자 이름 변경 중 오류가 발생했습니다.', error);
       });
   };
 
