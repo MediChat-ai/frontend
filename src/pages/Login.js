@@ -20,14 +20,13 @@ const Login = () => {
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
-  const CLIENT_ID = "Rs60Wd69Nt1mWtUXwGSI"; // 네이버 개발자센터에서 발급받은 Client ID
-  const REDIRECT_URI = "http://localhost:3000/users/login/naver/callback"; // 등록된 Redirect URI
-  const STATE = Math.random().toString(36); // CSRF 공격 방지용 State 값
+  const CLIENT_ID = process.env.REACT_APP_NAVER_CLIENT_ID;
+  const REDIRECT_URI = process.env.REACT_APP_NAVER_REDIRECT_URI;
+  const STATE = Math.random().toString(36);
 
   useEffect(() => {
     naverLogin.init();
     console.log("init!");
-    // getUser();
   }, []);
 
   const handleLogin = async (e) => {
