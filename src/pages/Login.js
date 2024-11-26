@@ -16,7 +16,7 @@ const backendHost = process.env.REACT_APP_BACKEND_HOST;
 const backendPort = process.env.REACT_APP_BACKEND_PORT;
 
 const Login = () => {
-  const { naver } = window; 
+  const { naver } = window;
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -105,31 +105,17 @@ const Login = () => {
                   </form>
                   <div className="social-login-buttons mt-4" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <span className="text-muted mb-3" style={{ fontSize: '14px' }}>소셜 계정으로 간편하게 로그인하세요!</span>
-                    <div style={{ display: 'flex', gap: '15px' }}>
+                    <div style={{ display: 'block', gap: '30px' }}>
                       <GoogleLogin
-                        buttonText=""
+                        buttonText="" // 기본 텍스트 제거
                         onSuccess={handleGoogleLogin}
                         onFailure={handleFailure}
                         cookiePolicy={'single_host_origin'}
-                        render={renderProps => (
-                          <button
-                            className="btn btn-outline-dark d-flex align-items-center justify-content-center rounded-circle"
-                            style={{ width: '50px', height: '50px' }}
-                            onClick={renderProps.onClick}
-                          >
-                            <img
-                              src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/1200px-Google_%22G%22_logo.svg.png"
-                              alt="구글 로고"
-                              style={{ width: '30px' }}
-                            />
-                          </button>
-                        )}
+                        uxMode="popup"
+                        isSignedIn={false}
+                        fetchBasicProfile={false}
                       />
-                      <a href="/auth/kakao">
-                        <button className="btn d-flex align-items-center justify-content-center rounded-circle" style={{ width: '50px', height: '50px', backgroundColor: '#FAE100' }}>
-                          <img src="https://cdn-icons-png.flaticon.com/512/2111/2111466.png" alt="카카오 로고" style={{ width: '30px' }} />
-                        </button>
-                      </a>
+                      <br />
                       <div id="naverIdLogin" />
                     </div>
                   </div>
