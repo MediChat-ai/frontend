@@ -1,5 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import remarkBreaks from 'remark-breaks';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import 'jquery/src/jquery';
@@ -26,8 +29,8 @@ const Chat = () => {
   ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
-  const [selectedModel, setSelectedModel] = useState('정확하지만 느림');
-  const [modelName, setModelName] = useState(0); // 초기 모델
+  const [selectedModel, setSelectedModel] = useState('빠르지만 정확성이 떨어질 수 있음');
+  const [modelName, setModelName] = useState(1); // 초기 모델
   const chatBoxRef = useRef(null);
 
   useEffect(() => {
@@ -163,7 +166,9 @@ const Chat = () => {
           {messages.map((msg, index) => (
             <div key={index} className={`d-flex ${msg.sender === 'user' ? 'justify-content-end' : 'justify-content-start'}`}>
               <div className={`text-white p-2 mb-2 rounded-3 ${msg.sender === 'user' ? 'bg-primary' : 'bg-secondary'}`} style={{ maxWidth: '70%' }}>
-                {msg.text}
+                <ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks]}>
+                  {msg.text}
+                </ReactMarkdown>
               </div>
             </div>
           ))}
