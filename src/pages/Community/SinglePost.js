@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import Navbar from '../../components/Navbar';
 import { jwtDecode } from 'jwt-decode';
+import '../../assets/css/loading.scss'
 
 const backendHost = process.env.REACT_APP_BACKEND_HOST;
 const backendPort = process.env.REACT_APP_BACKEND_PORT;
@@ -175,7 +176,15 @@ const SinglePost = () => {
     }
   };
 
-  if (!post) return <div>게시물을 불러오는 중...</div>;
+  if (!post) return (
+    <div class="spinner">
+      <div class="spinner__circle">
+        <div class="spinner__circle-gradient"></div>
+
+        <div class="spinner__circle-inner"></div>
+      </div>
+    </div>
+  );
 
   return (
     <div>
