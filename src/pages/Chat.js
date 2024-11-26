@@ -90,7 +90,10 @@ const Chat = () => {
           'https://api.groq.com/openai/v1/chat/completions',
           {
             model: "gemma2-9b-it",
-            messages: [{ role: "user", content: input }]
+            messages: [
+              { role: "system", content: "당신은 친절한 의료 상담 AI입니다. 질문에 대해 정확하고 도움이 되는 답변을 제공해야 합니다. 한국어로 답변하세요." },
+              { role: "user", content: input }
+            ]
           },
           {
             headers: {
