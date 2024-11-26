@@ -13,19 +13,21 @@ import Navbar from '../components/Navbar';
 const backendHost = process.env.REACT_APP_BACKEND_HOST;
 const backendPort = process.env.REACT_APP_BACKEND_PORT;
 
-// RunPod API 설정
 const RUNPOD_API_KEY = process.env.REACT_APP_RUNPOD_API_KEY;
 const RUNPOD_ENDPOINT_ID = process.env.REACT_APP_RUNPOD_ENDPOINT_ID;
 const BASE_URL = `https://api.runpod.ai/v2/${RUNPOD_ENDPOINT_ID}/openai/v1`;
 const MODEL_NAME = process.env.REACT_APP_MODEL_NAME;
+const GROQ_API_KEY = process.env.REACT_APP_GROQ_API_KEY;
 
 const Chat = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [messages, setMessages] = useState([
-    { sender: 'ai', text: 'Hello! How can I assist you today?' }
+    { sender: 'ai', text: '안녕하세요! 저는 당신의 의료 상담을 도와드릴 MediChat AI에요. 채팅창 위에서 원하시는 채팅 방식을 선택할 수 있어요.' }
   ]);
   const [input, setInput] = useState('');
-  const [loading, setLoading] = useState(false); // 로딩 상태 추가
+  const [loading, setLoading] = useState(false);
+  const [selectedModel, setSelectedModel] = useState('정확하지만 느림');
+  const [modelName, setModelName] = useState(0); // 초기 모델
   const chatBoxRef = useRef(null);
 
   useEffect(() => {
@@ -53,35 +55,50 @@ const Chat = () => {
   const sendMessage = async () => {
     if (input.trim() === '') return;
 
-    // 사용자 메시지 추가
     setMessages((prevMessages) => [
       ...prevMessages,
       { sender: 'user', text: input }
     ]);
 
-    // 로딩 상태 활성화
     setLoading(true);
 
     try {
-      // RunPod API 호출
-      const response = await axios.post(
-        `${BASE_URL}/chat/completions`,
-        {
-          model: MODEL_NAME,
-          messages: [{ role: "user", content: input }],
-          temperature: 0,
-          max_tokens: 512
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${RUNPOD_API_KEY}`,
-            "Content-Type": "application/json"
-          }
-        }
-      );
+      let aiResponse = '';
 
-      // AI 응답 추가
-      const aiResponse = response.data.choices[0].message.content;
+      if (modelName === 0) {
+        const response = await axios.post(
+          `${BASE_URL}/chat/completions`,
+          {
+            model: MODEL_NAME,
+            messages: [{ role: "user", content: input }],
+            temperature: 0,
+            max_tokens: 512
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${RUNPOD_API_KEY}`,
+              "Content-Type": "application/json"
+            }
+          }
+        );
+        aiResponse = response.data.choices[0].message.content;
+      } else if (modelName === 1) {
+        const groqResponse = await axios.post(
+          'https://api.groq.com/openai/v1/chat/completions',
+          {
+            model: "gemma2-9b-it",
+            messages: [{ role: "user", content: input }]
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${GROQ_API_KEY}`,
+              "Content-Type": "application/json"
+            }
+          }
+        );
+        aiResponse = groqResponse.data.choices[0].message.content;
+      }
+
       setMessages((prevMessages) => [
         ...prevMessages,
         { sender: 'ai', text: aiResponse }
@@ -93,25 +110,47 @@ const Chat = () => {
         { sender: 'ai', text: '오류가 발생했습니다. 다시 시도해주세요.' }
       ]);
     } finally {
-      // 로딩 상태 비활성화
       setLoading(false);
     }
 
-    // 입력 필드 초기화
     setInput('');
   };
 
   useEffect(() => {
-    // 새 메시지가 추가될 때마다 스크롤을 아래로 이동
     if (chatBoxRef.current) {
       chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
     }
   }, [messages]);
 
+  const handleModelChange = (model) => {
+    setSelectedModel(model);
+    if (model === '정확하지만 느림') {
+      setModelName(0);
+    } else if (model === '빠르지만 정확성이 떨어질 수 있음') {
+      setModelName(1);
+    }
+  };
+
   return (
     <div className="d-flex flex-column vh-100">
       <Navbar />
       <div className="chat-container container d-flex flex-column flex-grow-1 position-relative" style={{ maxWidth: '600px' }}>
+        <div className="dropdown mb-3">
+          <button
+            className="btn btn-success dropdown-toggle"
+            type="button"
+            id="modelDropdown"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            {selectedModel}
+          </button>
+          <ul className="dropdown-menu" aria-labelledby="modelDropdown">
+            <li><button className="dropdown-item" onClick={() => handleModelChange('정확하지만 느림')}>정확하지만 느림</button></li>
+            <li><button className="dropdown-item" onClick={() => handleModelChange('빠르지만 정확성이 떨어질 수 있음')}>빠르지만 정확성이 떨어질 수 있음</button></li>
+          </ul>
+        </div>
+
         <div
           className="chat-box p-3 bg-light flex-grow-1"
           ref={chatBoxRef}
@@ -128,7 +167,6 @@ const Chat = () => {
               </div>
             </div>
           ))}
-          {/* 로딩 중 메시지 표시 */}
           {loading && (
             <div className="d-flex justify-content-start">
               <div className="text-secondary p-2 mb-2 rounded-3 bg-light" style={{ maxWidth: '70%' }}>

@@ -70,13 +70,6 @@ const Login = () => {
     alert('구글 로그인 실패:', error);
   };
 
-  const handleNaverLogin = () => {
-    const loginUrl = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(
-      REDIRECT_URI
-    )}&state=${STATE}`;
-    window.location.href = loginUrl; // 네이버 인증 페이지로 이동
-  };
-
   const naverLogin = new naver.LoginWithNaverId({
     clientId: CLIENT_ID,
     callbackUrl: REDIRECT_URI,
