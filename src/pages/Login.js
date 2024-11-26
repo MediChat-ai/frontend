@@ -26,7 +26,6 @@ const Login = () => {
 
   useEffect(() => {
     naverLogin.init();
-    console.log("init!");
   }, []);
 
   const handleLogin = async (e) => {
