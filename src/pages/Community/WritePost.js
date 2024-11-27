@@ -10,14 +10,14 @@ const WritePost = () => {
   const navigate = useNavigate();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [token, setToken] = useState(localStorage.getItem('token'));
+  const token = localStorage.getItem('token');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!title.trim() || !content.trim()) {
-        alert('제목과 내용은 필수 입력 사항입니다.');
-        return;
+      alert('제목과 내용은 필수 입력 사항입니다.');
+      return;
     }
 
     try {
@@ -37,8 +37,8 @@ const WritePost = () => {
       } else {
         alert('게시물 생성에 실패했습니다.');
       }
-    } catch (error) {
-      console.error('게시물 생성 중 오류가 발생했습니다:', error);
+    } catch (err) {
+      console.error('게시물 생성 중 오류가 발생했습니다:', err);
       alert('게시물 생성 중 오류가 발생했습니다.');
     }
   };

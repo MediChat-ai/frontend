@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -15,7 +15,6 @@ import Navbar from '../components/Navbar';
 const backendURI = process.env.REACT_APP_BACKEND_URI;
 
 const Profile = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userId, setUserId] = useState('');
   const [username, setUsername] = useState('');
   const [authProvider, setAuthProvider] = useState('local');
@@ -25,21 +24,17 @@ const Profile = () => {
     if (token) {
       axios.get(`${backendURI}/users/auth`, { headers: { 'Authorization': `Bearer ${token}` } })
         .then(response => {
-          if (response.status == 200) {
-            setIsLoggedIn(true);
+          if (response.status === 200) {
             const decodedToken = jwtDecode(token);
             setUserId(decodedToken.user_id);
             setUsername(decodedToken.user_name);
             setAuthProvider(decodedToken.auth_provider);
           }
-          else {
-            setIsLoggedIn(false);
+          else
             alert(response.data.error);
-          }
         })
-        .catch(error => {
-          console.error('토큰 검증 실패:', error);
-          setIsLoggedIn(false);
+        .catch(err => {
+          console.error('토큰 검증 실패:', err);
         });
     }
     else {

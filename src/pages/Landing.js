@@ -6,10 +6,8 @@ import '../assets/css/Bootstrap-Chat.css';
 import '../assets/css/dmp_Inputs_Generic_Phone_Required.css';
 import '../assets/css/Navbar-With-Button-icons.css';
 import '../assets/css/Pricing-Duo-badges.css';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCommentMedical } from '@fortawesome/free-solid-svg-icons';
 import Footer from '../components/Footer';
-import { React, useEffect, useState, Navigate } from 'react';
+import { React, useEffect, useState } from 'react';
 import axios from 'axios';
 import Navbar from '../components/Navbar';
 
@@ -23,9 +21,8 @@ const Landing = () => {
     if (token) {
       axios.get(`${backendURI}/users/auth`, { headers: { 'Authorization': `Bearer ${token}` } })
         .then(response => {
-          if (response.status == 200) {
+          if (response.status === 200)
             setIsLoggedIn(true);
-          }
           else {
             setIsLoggedIn(false);
             alert(response.data.error);
@@ -37,9 +34,6 @@ const Landing = () => {
         });
     }
   }, []);
-  const handleLoginSuccess = () => {
-    setIsLoggedIn(true);
-  };
   return (
     <div>
       <Navbar />
@@ -191,7 +185,7 @@ const Landing = () => {
                         <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"></path>
                       </svg></span><span>의료 커뮤니티에 전문가로 등록</span></li>
                     </ul>
-                  </div><a className="btn btn-primary d-block w-100 bg-white-300 disabled" role="button">준비중인 기능입니다.</a>
+                  </div><button className="btn btn-primary d-block w-100 bg-white-300 disabled">준비중인 기능입니다.</button>
                 </div>
               </div>
             </div>
@@ -199,7 +193,9 @@ const Landing = () => {
           <section className="py-4 py-xl-5" id='contact'>
             <div className="container">
               <div className="row">
-                <div className="col"><iframe allowfullscreen frameborder="0" loading="lazy" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDfKbBYd-RVuKhOO1AS9cmgn5p616kvnZc&amp;q=%EA%B0%80%EC%B2%9C%EB%8C%80%ED%95%99%EA%B5%90+%EA%B8%80%EB%A1%9C%EB%B2%8C%EC%BA%A0%ED%8D%BC%EC%8A%A4&amp;zoom=12" width="100%" height="100%"></iframe></div>
+                <div className="col">
+                  <iframe allowfullscreen title="map" frameborder="0" loading="lazy" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDfKbBYd-RVuKhOO1AS9cmgn5p616kvnZc&amp;q=%EA%B0%80%EC%B2%9C%EB%8C%80%ED%95%99%EA%B5%90+%EA%B8%80%EB%A1%9C%EB%B2%8C%EC%BA%A0%ED%8D%BC%EC%8A%A4&amp;zoom=12" width="100%" height="100%"></iframe>
+                </div>
                 <div className="col-md-6 col-xl-4">
                   <div>
                     <form className="p-3 p-xl-4" method="post">

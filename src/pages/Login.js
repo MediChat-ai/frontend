@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
-import { useGoogleLogin, GoogleLogin } from '@react-oauth/google';
+import { GoogleLogin } from '@react-oauth/google';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import 'jquery/src/jquery';
@@ -18,35 +18,40 @@ const Login = () => {
   const { naver } = window;
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
   const CLIENT_ID = process.env.REACT_APP_NAVER_CLIENT_ID;
   const REDIRECT_URI = process.env.REACT_APP_NAVER_REDIRECT_URI;
-  const STATE = Math.random().toString(36);
 
   useEffect(() => {
+    const naverLogin = new naver.LoginWithNaverId({
+      clientId: CLIENT_ID,
+      callbackUrl: REDIRECT_URI,
+      isPopup: 0,
+      loginButton: {
+        color: "green",
+        type: 3,
+        height: 50,
+      },
+    });
     naverLogin.init();
-  }, []);
+  },[naver, CLIENT_ID, REDIRECT_URI]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError(null);
-
     try {
       const response = await axios.post(`${backendURI}/users/login`, {
         user_id: userId,
         pw: password,
       }, { validateStatus: (status) => status !== 500 });
 
-      if (response.status == 200) {
+      if (response.status === 200) {
         localStorage.setItem('token', response.data.token);
         alert('로그인 성공!');
         window.location.href = '/';
       }
-      else if (response.status == 401)
+      else if (response.status === 401)
         alert(response.data.error);
     } catch (err) {
       alert(err);
-      setError('로그인에 실패했습니다. 사용자 ID와 비밀번호를 확인하세요.');
       console.error('로그인 에러:', err);
     }
   };
@@ -67,17 +72,6 @@ const Login = () => {
   const handleFailure = (error) => {
     alert('구글 로그인 실패:', error);
   };
-
-  const naverLogin = new naver.LoginWithNaverId({
-    clientId: CLIENT_ID,
-    callbackUrl: REDIRECT_URI,
-    isPopup: 0,
-    loginButton: {
-      color: "green",
-      type: 3,
-      height: 50,
-    },
-  });
 
   return (
     <div>

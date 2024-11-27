@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useParams, useNavigate } from 'react-router-dom';
+import React from 'react';
 import Navbar from '../components/Navbar';
 import '../assets/css/Search-Input-Responsive-with-Icon.css'
 

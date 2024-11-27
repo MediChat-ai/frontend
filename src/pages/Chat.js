@@ -22,7 +22,6 @@ const MODEL_NAME = process.env.REACT_APP_MODEL_NAME;
 const GROQ_API_KEY = process.env.REACT_APP_GROQ_API_KEY;
 
 const Chat = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [messages, setMessages] = useState([
     { sender: 'ai', text: '안녕하세요! 저는 당신의 의료 상담을 도와드릴 MediChat AI에요. 채팅창 위에서 원하시는 채팅 방식을 선택할 수 있어요.' }
   ]);
@@ -37,16 +36,11 @@ const Chat = () => {
     if (token) {
       axios.get(`${backendURI}/users/auth`, { headers: { 'Authorization': `Bearer ${token}` } })
         .then(response => {
-          if (response.status === 200) {
-            setIsLoggedIn(true);
-          } else {
-            setIsLoggedIn(false);
+          if (response.status !== 200)
             alert(response.data.error);
-          }
         })
         .catch(error => {
           console.error('토큰 검증 실패:', error);
-          setIsLoggedIn(false);
         });
     } else {
       alert('로그인이 필요합니다.');

@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import Navbar from '../../components/Navbar';
 import { jwtDecode } from 'jwt-decode';
-import '../../assets/css/loading.scss'
+import '../../assets/css/loading.css'
 
 const backendURI = process.env.REACT_APP_BACKEND_URI;
 
@@ -32,8 +32,8 @@ const SinglePost = () => {
           content: response.data.posts.post_content,
         });
         setIsAuthor(jwtDecode(token).user_name === response.data.posts.author_name);
-      } catch (error) {
-        console.error('게시물을 불러오는 중 오류가 발생했습니다:', error);
+      } catch (err) {
+        console.error('게시물을 불러오는 중 오류가 발생했습니다:', err);
       }
     };
     fetchPost();
@@ -48,8 +48,8 @@ const SinglePost = () => {
           },
         });
         setComments(response.data.comments);
-      } catch (error) {
-        console.error('댓글을 불러오는 중 오류가 발생했습니다:', error);
+      } catch (err) {
+        console.error('댓글을 불러오는 중 오류가 발생했습니다:', err);
       }
     };
     fetchComments();
@@ -77,8 +77,8 @@ const SinglePost = () => {
       } else {
         throw new Error('댓글 업로드 실패');
       }
-    } catch (error) {
-      console.error('댓글 업로드 중 오류가 발생했습니다:', error);
+    } catch (err) {
+      console.error('댓글 업로드 중 오류가 발생했습니다:', err);
     }
   };
 
@@ -95,12 +95,12 @@ const SinglePost = () => {
       });
       if (response.status === 200) {
         alert('게시물이 삭제되었습니다.');
-        window.location.href = `/community/${post.board_id}`; // 해당 게시판 페이지로 이동
+        window.location.href = `/community/${post.board_id}`;
       } else {
         throw new Error('게시물 삭제 실패');
       }
-    } catch (error) {
-      console.error('게시물 삭제 중 오류가 발생했습니다:', error);
+    } catch (err) {
+      console.error('게시물 삭제 중 오류가 발생했습니다:', err);
     }
   };
 
@@ -127,8 +127,8 @@ const SinglePost = () => {
       } else {
         throw new Error('게시물 수정 실패');
       }
-    } catch (error) {
-      console.error('게시물 수정 중 오류가 발생했습니다:', error);
+    } catch (err) {
+      console.error('게시물 수정 중 오류가 발생했습니다:', err);
     }
   };
 
@@ -146,8 +146,8 @@ const SinglePost = () => {
       } else {
         throw new Error('댓글 삭제 실패');
       }
-    } catch (error) {
-      console.error('댓글 삭제 중 오류가 발생했습니다:', error);
+    } catch (err) {
+      console.error('댓글 삭제 중 오류가 발생했습니다:', err);
     }
   };
 
@@ -170,8 +170,8 @@ const SinglePost = () => {
       } else {
         throw new Error('댓글 수정 실패');
       }
-    } catch (error) {
-      console.error('댓글 수정 중 오류가 발생했습니다:', error);
+    } catch (err) {
+      console.error('댓글 수정 중 오류가 발생했습니다:', err);
     }
   };
 

@@ -33,7 +33,6 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [passwordCheck, setPasswordCheck] = useState("");
   const [passwordStrength, setPasswordStrength] = useState(0);
-  const [error, setError] = useState(null);
 
   const handlePasswordChange = (e) => {
     const newPassword = e.target.value;
@@ -43,7 +42,6 @@ const Register = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    setError(null);
     if (!validateUsername(userId)) {
       alert('아이디는 영문자와 숫자만 가능합니다.');
       return;
@@ -75,15 +73,14 @@ const Register = () => {
         if (loginResponse.status === 200) {
           localStorage.setItem('token', loginResponse.data.token);
           window.location.href = '/';
-        } else if (loginResponse.status === 401) {
+        } 
+        else if (loginResponse.status === 401)
           alert(loginResponse.data.error);
-        }
-      } else if (response.status === 401) {
-        alert(response.data.error);
       }
+      else if (response.status === 401)
+        alert(response.data.error);
     } catch (err) {
       alert('회원가입에 실패했습니다.');
-      setError('회원가입에 실패했습니다. 사용자 ID와 비밀번호를 확인하세요.');
       console.error('회원가입 에러:', err);
     }
   };

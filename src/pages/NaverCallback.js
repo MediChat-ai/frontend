@@ -1,11 +1,9 @@
 import React, { useEffect } from "react";
-import { useSearchParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const backendURI = process.env.REACT_APP_BACKEND_URI;
 
 const NaverCallback = () => {
-  const navigate = useNavigate();
 
   useEffect(() => {
     const processNaverLogin = async () => {
@@ -24,13 +22,13 @@ const NaverCallback = () => {
         );
 
         if (response.data.status === "failure") {
-          if (response.data.errorCode == "502") {
+          if (response.data.errorCode === 502) {
             alert("네이버 로그인 과정에서 오류가 발생했습니다.");
           }
         }
         localStorage.setItem('token', response.data.token);
         window.location.href = "/";
-      } catch (error) {
+      } catch (err) {
         alert("네이버 로그인 과정에서 오류가 발생했습니다.");
       }
     };

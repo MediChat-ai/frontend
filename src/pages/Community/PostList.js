@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Navbar from '../../components/Navbar';
 import '../../assets/css/PostList.css'
 
@@ -23,8 +23,8 @@ const PostList = () => {
 				});
 				setPosts(response.data.posts.reverse());
 				setBoardName(response.data.board_name);
-			} catch (error) {
-				console.error('게시물을 불러오는 중 오류가 발생했습니다:', error);
+			} catch (err) {
+				console.error('게시물을 불러오는 중 오류가 발생했습니다:', err);
 			}
 		};
 		fetchPosts();
