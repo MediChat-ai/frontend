@@ -5,8 +5,7 @@ import Navbar from '../../components/Navbar';
 import { jwtDecode } from 'jwt-decode';
 import '../../assets/css/loading.scss'
 
-const backendHost = process.env.REACT_APP_BACKEND_HOST;
-const backendPort = process.env.REACT_APP_BACKEND_PORT;
+const backendURI = process.env.REACT_APP_BACKEND_URI;
 
 const SinglePost = () => {
   const { _id, post_id } = useParams();
@@ -22,7 +21,7 @@ const SinglePost = () => {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await axios.get(`http://${backendHost}:${backendPort}/community/getPostList?board_id=${_id}&id=${post_id}`, {
+        const response = await axios.get(`${backendURI}/community/getPostList?board_id=${_id}&id=${post_id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -43,7 +42,7 @@ const SinglePost = () => {
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const response = await axios.get(`http://${backendHost}:${backendPort}/community/getCommentList?post_id=${post_id}`, {
+        const response = await axios.get(`${backendURI}/community/getCommentList?post_id=${post_id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -62,7 +61,7 @@ const SinglePost = () => {
     if (!commentContent.trim()) return alert('댓글 내용을 입력하세요.');
 
     try {
-      const response = await axios.post(`http://${backendHost}:${backendPort}/community/writeComment`, {
+      const response = await axios.post(`${backendURI}/community/writeComment`, {
         post_id: post_id,
         author_name: jwtDecode(token).user_name,
         content: commentContent,
@@ -88,7 +87,7 @@ const SinglePost = () => {
     if (!confirmDelete) return;
 
     try {
-      const response = await axios.delete(`http://${backendHost}:${backendPort}/community/deletePost`, {
+      const response = await axios.delete(`${backendURI}/community/deletePost`, {
         data: { post_id: post_id, token: localStorage.getItem('token') },
         // headers: {
         //   Authorization: `Bearer ${token}`,
@@ -107,7 +106,7 @@ const SinglePost = () => {
 
   const handleEditPost = async () => {
     try {
-      const response = await axios.put(`http://${backendHost}:${backendPort}/community/editPost`, {
+      const response = await axios.put(`${backendURI}/community/editPost`, {
         post_id: post_id,
         title: editedPost.title,
         content: editedPost.content,
@@ -138,7 +137,7 @@ const SinglePost = () => {
     if (!confirmDelete) return;
 
     try {
-      const response = await axios.delete(`http://${backendHost}:${backendPort}/community/deleteComment`, {
+      const response = await axios.delete(`${backendURI}/community/deleteComment`, {
         data: { comment_id: commentId, token },
       });
       if (response.status === 200) {
@@ -157,7 +156,7 @@ const SinglePost = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.put(`http://${backendHost}:${backendPort}/community/editComment`, {
+      const response = await axios.put(`${backendURI}/community/editComment`, {
         comment_id: commentId,
         content: editedComment.content,
         token,

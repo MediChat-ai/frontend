@@ -13,8 +13,7 @@ import { React, useEffect, useState, Navigate } from 'react';
 import axios from 'axios';
 import Navbar from '../components/Navbar';
 
-const backendHost = process.env.REACT_APP_BACKEND_HOST;
-const backendPort = process.env.REACT_APP_BACKEND_PORT;
+const backendURI = process.env.REACT_APP_BACKEND_URI;
 
 const Landing = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -22,7 +21,7 @@ const Landing = () => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      axios.get(`http://${backendHost}:${backendPort}/users/auth`, { headers: { 'Authorization': `Bearer ${token}` } })
+      axios.get(`${backendURI}/users/auth`, { headers: { 'Authorization': `Bearer ${token}` } })
         .then(response => {
           if (response.status == 200) {
             setIsLoggedIn(true);
@@ -43,29 +42,6 @@ const Landing = () => {
   };
   return (
     <div>
-      {/* <nav className="navbar navbar-dark bg-dark navbar-expand-md py-3">
-        <div className="container">
-          <a className="navbar-brand d-flex align-items-center" href="/">
-            <span className="bs-icon-sm bs-icon-rounded bs-icon-primary d-flex justify-content-center align-items-center me-2 bs-icon">
-              <FontAwesomeIcon icon={faCommentMedical} />
-            </span>
-            <span>MediChat</span>
-          </a>
-          <button data-bs-toggle="collapse" className="navbar-toggler" data-bs-target="#navcol-1">
-            <span className="visually-hidden">Toggle navigation</span>
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navcol-1">
-            <ul className="navbar-nav me-auto">
-              <li className="nav-item"><a className="nav-link" href="#feature">기능</a></li>
-              <li className="nav-item"><a className="nav-link" href="#pricing">가격</a></li>
-              <li className="nav-item"><a className="nav-link" href="#contact">건의사항</a></li>
-            </ul>
-            <a href="/login"><button className="btn btn-secondary me-2" type="button">로그인</button></a>
-            <a href="/register"><button className="btn btn-primary" type="button">회원 가입</button></a>
-          </div>
-        </div>
-      </nav> */}
       <Navbar />
       <section className="py-4 py-xl-5">
         <div className="container">
@@ -155,12 +131,6 @@ const Landing = () => {
                   <p className="mb-0">사용자</p>
                 </div>
               </div>
-              {/* <div className="col">
-                <div className="p-3">
-                  <h4 className="display-5 fw-bold text-white mb-0">89</h4>
-                  <p className="mb-0">Erat netus</p>
-                </div>
-              </div> */}
             </div>
           </div>
         </div>

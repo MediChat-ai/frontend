@@ -3,8 +3,7 @@ import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import Navbar from '../../components/Navbar';
 
-const backendHost = process.env.REACT_APP_BACKEND_HOST;
-const backendPort = process.env.REACT_APP_BACKEND_PORT;
+const backendURI = process.env.REACT_APP_BACKEND_URI;
 
 const WritePost = () => {
   const { _id } = useParams();
@@ -22,7 +21,7 @@ const WritePost = () => {
     }
 
     try {
-      const response = await axios.post(`http://${backendHost}:${backendPort}/community/writePost`, {
+      const response = await axios.post(`${backendURI}/community/writePost`, {
         board_id: _id,
         title,
         content,

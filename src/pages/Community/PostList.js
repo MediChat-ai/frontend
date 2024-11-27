@@ -4,8 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import Navbar from '../../components/Navbar';
 import '../../assets/css/PostList.css'
 
-const backendHost = process.env.REACT_APP_BACKEND_HOST;
-const backendPort = process.env.REACT_APP_BACKEND_PORT;
+const backendURI = process.env.REACT_APP_BACKEND_URI;
 
 const PostList = () => {
 	const { _id } = useParams();
@@ -17,7 +16,7 @@ const PostList = () => {
 	useEffect(() => {
 		const fetchPosts = async () => {
 			try {
-				const response = await axios.get(`http://${backendHost}:${backendPort}/community/getPostList?board_id=${_id}`, {
+				const response = await axios.get(`${backendURI}/community/getPostList?board_id=${_id}`, {
 					headers: {
 						Authorization: `Bearer ${token}`,
 					},
@@ -69,24 +68,24 @@ const PostList = () => {
 											{(() => {
 												const postDate = new Date(post.created_at);
 												const today = new Date();
-	
-												const isToday = 
+
+												const isToday =
 													postDate.getFullYear() === today.getFullYear() &&
 													postDate.getMonth() === today.getMonth() &&
 													postDate.getDate() === today.getDate();
-	
+
 												return isToday
 													? postDate.toLocaleTimeString('ko-KR', {
-															timeZone: 'Asia/Seoul',
-															hour: '2-digit',
-															minute: '2-digit',
-															hour12: false,
-														})
+														timeZone: 'Asia/Seoul',
+														hour: '2-digit',
+														minute: '2-digit',
+														hour12: false,
+													})
 													: postDate.toLocaleDateString('ko-KR', {
-															timeZone: 'Asia/Seoul',
-															month: '2-digit',
-															day: '2-digit',
-														});
+														timeZone: 'Asia/Seoul',
+														month: '2-digit',
+														day: '2-digit',
+													});
 											})()}
 										</td>
 									</tr>

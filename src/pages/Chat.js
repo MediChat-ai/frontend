@@ -13,8 +13,7 @@ import '../assets/css/Navbar-With-Button-icons.css';
 import '../assets/css/Pricing-Duo-badges.css';
 import Navbar from '../components/Navbar';
 
-const backendHost = process.env.REACT_APP_BACKEND_HOST;
-const backendPort = process.env.REACT_APP_BACKEND_PORT;
+const backendURI = process.env.REACT_APP_BACKEND_URI;
 
 const RUNPOD_API_KEY = process.env.REACT_APP_RUNPOD_API_KEY;
 const RUNPOD_ENDPOINT_ID = process.env.REACT_APP_RUNPOD_ENDPOINT_ID;
@@ -36,7 +35,7 @@ const Chat = () => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      axios.get(`http://${backendHost}:${backendPort}/users/auth`, { headers: { 'Authorization': `Bearer ${token}` } })
+      axios.get(`${backendURI}/users/auth`, { headers: { 'Authorization': `Bearer ${token}` } })
         .then(response => {
           if (response.status === 200) {
             setIsLoggedIn(true);

@@ -12,8 +12,7 @@ import '../assets/css/Pricing-Duo-badges.css';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 
-const backendHost = process.env.REACT_APP_BACKEND_HOST;
-const backendPort = process.env.REACT_APP_BACKEND_PORT;
+const backendURI = process.env.REACT_APP_BACKEND_URI;
 
 const Login = () => {
   const { naver } = window;
@@ -33,7 +32,7 @@ const Login = () => {
     setError(null);
 
     try {
-      const response = await axios.post(`http://${backendHost}:${backendPort}/users/login`, {
+      const response = await axios.post(`${backendURI}/users/login`, {
         user_id: userId,
         pw: password,
       }, { validateStatus: (status) => status !== 500 });
@@ -56,7 +55,7 @@ const Login = () => {
     const { credential } = credentialResponse;
 
     try {
-      const res = await axios.post(`http://${backendHost}:${backendPort}/users/oauth/google`, { accessToken: credential });
+      const res = await axios.post(`${backendURI}/users/oauth/google`, { accessToken: credential });
       localStorage.setItem('token', res.data.token);
       window.location.href = '/';
     } catch (error) {
@@ -107,7 +106,7 @@ const Login = () => {
                     <span className="text-muted mb-3" style={{ fontSize: '14px' }}>소셜 계정으로 간편하게 로그인하세요!</span>
                     <div style={{ display: 'block', gap: '30px' }}>
                       <GoogleLogin
-                        buttonText="" // 기본 텍스트 제거
+                        buttonText=""
                         onSuccess={handleGoogleLogin}
                         onFailure={handleFailure}
                         cookiePolicy={'single_host_origin'}

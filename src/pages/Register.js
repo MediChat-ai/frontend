@@ -11,8 +11,7 @@ import '../assets/css/Pricing-Duo-badges.css';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 
-const backendHost = process.env.REACT_APP_BACKEND_HOST;
-const backendPort = process.env.REACT_APP_BACKEND_PORT;
+const backendURI = process.env.REACT_APP_BACKEND_URI;
 
 const validateUsername = username => {
   const regex = /^[a-zA-Z0-9]+$/; // 영문자와 숫자만 허용
@@ -59,7 +58,7 @@ const Register = () => {
     }
 
     try {
-      const response = await axios.post(`http://${backendHost}:${backendPort}/users/register`, {
+      const response = await axios.post(`${backendURI}/users/register`, {
         user_id: userId,
         user_name: username,
         auth_provider: 'local',
@@ -68,7 +67,7 @@ const Register = () => {
 
       if (response.status === 200) {
         alert('회원가입 성공!');
-        const loginResponse = await axios.post(`http://${backendHost}:${backendPort}/users/login`, {
+        const loginResponse = await axios.post(`${backendURI}/users/login`, {
           user_id: userId,
           pw: password,
         }, { validateStatus: (status) => status !== 500 });

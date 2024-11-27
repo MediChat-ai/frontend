@@ -11,8 +11,9 @@ import '../../assets/css/Pricing-Duo-badges.css';
 import '../../assets/css/Card-Group1-Shadow.css';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
-const backendHost = process.env.REACT_APP_BACKEND_HOST;
-const backendPort = process.env.REACT_APP_BACKEND_PORT;
+
+const backendURI = process.env.REACT_APP_BACKEND_URI;
+
 const Community_boards = () => {
 	const [boardList, setBoardList] = useState([]);
 	const [loading, setLoading] = useState(true);
@@ -20,7 +21,7 @@ const Community_boards = () => {
 	useEffect(() => {
 		const token = localStorage.getItem('token');
 		if (token) {
-			axios.get(`http://${backendHost}:${backendPort}/community/getBoardList`, { headers: { 'Authorization': `Bearer ${token}` } })
+			axios.get(`${backendURI}/community/getBoardList`, { headers: { 'Authorization': `Bearer ${token}` } })
 				.then(response => {
 					if (response.status == 200) {
 						setBoardList(response.data.boards);
@@ -38,9 +39,7 @@ const Community_boards = () => {
 			window.location.href = '/';
 		}
 	}, []);
-	useEffect(() => {
-		console.log(boardList);
-	}, [boardList]);
+	useEffect(() => { }, [boardList]);
 	return (
 		<div>
 			<Navbar />

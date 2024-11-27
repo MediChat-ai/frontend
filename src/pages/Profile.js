@@ -12,8 +12,7 @@ import '../assets/css/Pricing-Duo-badges.css';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 
-const backendHost = process.env.REACT_APP_BACKEND_HOST;
-const backendPort = process.env.REACT_APP_BACKEND_PORT;
+const backendURI = process.env.REACT_APP_BACKEND_URI;
 
 const Profile = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -24,7 +23,7 @@ const Profile = () => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      axios.get(`http://${backendHost}:${backendPort}/users/auth`, { headers: { 'Authorization': `Bearer ${token}` } })
+      axios.get(`${backendURI}/users/auth`, { headers: { 'Authorization': `Bearer ${token}` } })
         .then(response => {
           if (response.status == 200) {
             setIsLoggedIn(true);
@@ -53,7 +52,7 @@ const Profile = () => {
     event.preventDefault();
     const token = localStorage.getItem('token');
 
-    axios.post(`http://${backendHost}:${backendPort}/users/change/username`, {
+    axios.post(`${backendURI}/users/change/username`, {
       token: token,
       new_username: document.getElementById('user_name').value
     })
@@ -75,7 +74,7 @@ const Profile = () => {
   const handlePasswordChange = (event) => {
     event.preventDefault();
     const token = localStorage.getItem('token');
-    axios.post(`http://${backendHost}:${backendPort}/users/change/password`, {
+    axios.post(`${backendURI}/users/change/password`, {
       token: token,
       password: document.getElementById('password').value,
       new_password: document.getElementById('newPassword').value
@@ -109,7 +108,6 @@ const Profile = () => {
             <p className="text-primary m-0 fw-bold">사용자 설정</p>
           </div>
           <div className="card-body">
-            {/* 닉네임 변경 폼 */}
             <form onSubmit={handleNicknameChange}>
               <div className="row align-items-center" style={{ marginBottom: '25px', textAlign: 'left' }}>
                 <div className="col-sm-8 col-md-8 col-lg-9 col-xl-10 col-xxl-10">

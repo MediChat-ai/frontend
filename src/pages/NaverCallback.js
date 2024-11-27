@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
+const backendURI = process.env.REACT_APP_BACKEND_URI;
+
 const NaverCallback = () => {
   const navigate = useNavigate();
 
@@ -17,7 +19,7 @@ const NaverCallback = () => {
 
       try {
         const response = await axios.post(
-          "http://localhost:3001/users/oauth/naver",
+          `${backendURI}/users/oauth/naver`,
           params
         );
 
