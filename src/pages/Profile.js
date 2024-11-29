@@ -198,12 +198,12 @@ const Profile = () => {
             )}
           </div>
         </div>
-        <div className="card shadow mb-3">
+        {/* <div className="card shadow mb-3">
           <div className="card-header py-3">
             <p className="text-primary m-0 fw-bold">작성한 글</p>
           </div>
           <div className="card-body"></div>
-        </div>
+        </div> */}
       </div>
       <Footer />
     </div>
