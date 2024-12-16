@@ -4,11 +4,10 @@
 
 .rounded-bottom-left {
   border-radius: 0;
-  border-bottom-left-radius: .25rem!important;
+  border-bottom-left-radius: .25rem !important;
 }
 
 .rounded-bottom-right {
   border-radius: 0;
-  border-bottom-right-radius: .25rem!important;
+  border-bottom-right-radius: .25rem !important;
 }
-

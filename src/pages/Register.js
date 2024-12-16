@@ -75,7 +75,7 @@ const Register = () => {
         if (loginResponse.status === 200) {
           localStorage.setItem('token', loginResponse.data.token);
           window.location.href = '/';
-        } 
+        }
         else if (loginResponse.status === 401)
           alert(loginResponse.data.error);
       }
