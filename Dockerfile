@@ -17,11 +17,9 @@ RUN npm i -g yarn
 COPY . /medichat-frontend
 RUN yarn
 RUN npm i -S serve
-RUN yarn add global serve
 RUN yarn build
 
 RUN export PATH="$(npm bin -g):$PATH"
 RUN export PATH="$PATH:$(yarn global bin)"
-RUN source ~/.bashrc
 
 CMD ["npx", "serve", "-s", "build"]
