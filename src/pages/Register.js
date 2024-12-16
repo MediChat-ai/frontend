@@ -48,7 +48,7 @@ const Register = () => {
       alert('아이디는 영문자와 숫자만 가능합니다.');
       return;
     }
-    if (passwordStrength < 3) {
+    if (passwordStrength < 4) {
       alert('비밀번호 보안성이 낮습니다. 영어 대소문자, 숫자, 특수문자가 포함된 8자 이상의 비밀번호를 입력해주세요.');
       return;
     }
