@@ -3,10 +3,12 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import Navbar from '../../components/Navbar';
 import '../../assets/css/PostList.css'
+import useTitle from '../../hooks/useTitle';
 
 const backendURI = process.env.REACT_APP_BACKEND_URI;
 
 const PostList = () => {
+	useTitle('MediChat - 커뮤니티');
 	const { _id } = useParams();
 	const [posts, setPosts] = useState([]);
 	const [boardName, setBoardName] = useState('');

@@ -11,10 +11,12 @@ import '../../assets/css/Pricing-Duo-badges.css';
 import '../../assets/css/Card-Group1-Shadow.css';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
+import useTitle from '../../hooks/useTitle';
 
 const backendURI = process.env.REACT_APP_BACKEND_URI;
 
 const Community_boards = () => {
+	useTitle('MediChat - 커뮤니티');
 	const [boardList, setBoardList] = useState([]);
 	useEffect(() => {
 		const token = localStorage.getItem('token');

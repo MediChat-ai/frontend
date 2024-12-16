@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import Navbar from '../../components/Navbar';
+import useTitle from '../../hooks/useTitle';
 
 const backendURI = process.env.REACT_APP_BACKEND_URI;
 
 const WritePost = () => {
+  useTitle('MediChat - 커뮤니티 글 쓰기');
   const { _id } = useParams();
   const navigate = useNavigate();
   const [title, setTitle] = useState('');

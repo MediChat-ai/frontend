@@ -1,6 +1,8 @@
 import '../assets/css/404.css'
+import useTitle from '../hooks/useTitle';
 
 const NotFound = () => {
+  useTitle('404 Not Found');
   const handleBack = () => {
     window.history.back();
   };

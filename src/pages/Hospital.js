@@ -3,10 +3,12 @@ import axios from 'axios';
 import Navbar from '../components/Navbar';
 import '../assets/css/Search-Input-Responsive-with-Icon.css';
 import '../assets/css/loading.css'
+import useTitle from '../hooks/useTitle';
 
 const BACKEND_URI = process.env.REACT_APP_BACKEND_URI;
 
 const Hospital = () => {
+  useTitle('MediChat - 병원 검색');
   const [searchName, setSearchName] = useState("");
   const [selectedSubjectCode, setSelectedSubjectCode] = useState("");
   const [hospitals, setHospitals] = useState([]);

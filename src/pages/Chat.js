@@ -12,6 +12,7 @@ import '../assets/css/dmp_Inputs_Generic_Phone_Required.css';
 import '../assets/css/Navbar-With-Button-icons.css';
 import '../assets/css/Pricing-Duo-badges.css';
 import Navbar from '../components/Navbar';
+import useTitle from '../hooks/useTitle';
 
 const backendURI = process.env.REACT_APP_BACKEND_URI;
 
@@ -22,6 +23,7 @@ const MODEL_NAME = process.env.REACT_APP_MODEL_NAME;
 const GROQ_API_KEY = process.env.REACT_APP_GROQ_API_KEY;
 
 const Chat = () => {
+  useTitle('MediChat - AI 채팅');
   const [messages, setMessages] = useState([
     { sender: 'ai', text: '안녕하세요! 저는 당신의 의료 상담을 도와드릴 MediChat AI에요. 채팅창 위에서 원하시는 채팅 방식을 선택할 수 있어요.' }
   ]);

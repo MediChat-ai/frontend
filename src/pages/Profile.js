@@ -11,10 +11,12 @@ import '../assets/css/Navbar-With-Button-icons.css';
 import '../assets/css/Pricing-Duo-badges.css';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
+import useTitle from '../hooks/useTitle';
 
 const backendURI = process.env.REACT_APP_BACKEND_URI;
 
 const Profile = () => {
+  useTitle('MediChat - 프로필');
   const [userId, setUserId] = useState('');
   const [username, setUsername] = useState('');
   const [authProvider, setAuthProvider] = useState('local');

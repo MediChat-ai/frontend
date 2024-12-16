@@ -10,10 +10,12 @@ import Footer from '../components/Footer';
 import { React, useEffect, useState } from 'react';
 import axios from 'axios';
 import Navbar from '../components/Navbar';
+import useTitle from '../hooks/useTitle';
 
 const backendURI = process.env.REACT_APP_BACKEND_URI;
 
 const Landing = () => {
+  useTitle('MediChat');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {

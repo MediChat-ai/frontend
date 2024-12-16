@@ -4,10 +4,12 @@ import { useParams } from 'react-router-dom';
 import Navbar from '../../components/Navbar';
 import { jwtDecode } from 'jwt-decode';
 import '../../assets/css/loading.css'
+import useTitle from '../../hooks/useTitle';
 
 const backendURI = process.env.REACT_APP_BACKEND_URI;
 
 const SinglePost = () => {
+  useTitle('MediChat - 커뮤니티');
   const { _id, post_id } = useParams();
   const [post, setPost] = useState(null);
   const [comments, setComments] = useState([]);
