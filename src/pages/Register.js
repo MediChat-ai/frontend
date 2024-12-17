@@ -132,12 +132,12 @@ const Register = () => {
                           width: `${(passwordStrength / 4) * 100}%`,
                           backgroundColor:
                             passwordStrength === 1
-                              ? "red"
+                              ? "#f73a34"
                               : passwordStrength === 2
-                                ? "orange"
+                                ? "#ed8337"
                                 : passwordStrength === 3
-                                  ? "green"
-                                  : "blue",
+                                  ? "#ffe600"
+                                  : "#37ed3a",
                           transition: "width 0.3s, background-color 0.3s",
                           borderRadius: "5px",
                         }}
