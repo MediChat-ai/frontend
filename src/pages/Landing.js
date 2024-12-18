@@ -57,6 +57,8 @@ const Landing = () => {
                       </>
                     )}
                   </div>
+                  <br />
+                  <a href="https://github.com/MediChat-ai/android/releases/download/v1.01/MediChat.apk" target="_blank" rel="noreferrer"><button className="btn btn-primary fs-5 py-2 px-4" type="button">앱 다운로드</button></a>
                 </div>
               </div>
             </div>
