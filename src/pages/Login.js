@@ -23,19 +23,19 @@ const Login = () => {
   const CLIENT_ID = process.env.REACT_APP_NAVER_CLIENT_ID;
   const REDIRECT_URI = process.env.REACT_APP_NAVER_REDIRECT_URI;
 
-  useEffect(() => {
-    const naverLogin = new naver.LoginWithNaverId({
-      clientId: CLIENT_ID,
-      callbackUrl: REDIRECT_URI,
-      isPopup: 0,
-      loginButton: {
-        color: "green",
-        type: 3,
-        height: 50,
-      },
-    });
-    naverLogin.init();
-  },[naver, CLIENT_ID, REDIRECT_URI]);
+  // useEffect(() => {
+  //   const naverLogin = new naver.LoginWithNaverId({
+  //     clientId: CLIENT_ID,
+  //     callbackUrl: REDIRECT_URI,
+  //     isPopup: 0,
+  //     loginButton: {
+  //       color: "green",
+  //       type: 3,
+  //       height: 50,
+  //     },
+  //   });
+  //   naverLogin.init();
+  // },[naver, CLIENT_ID, REDIRECT_URI]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -111,7 +111,7 @@ const Login = () => {
                         fetchBasicProfile={false}
                       />
                       <br />
-                      <div id="naverIdLogin" />
+                      {/* <div id="naverIdLogin" /> */}
                     </div>
                   </div>
                 </div>
