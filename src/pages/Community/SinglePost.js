@@ -21,7 +21,7 @@ const SinglePost = () => {
   const [error, setError] = useState(null);
 
   const token = localStorage.getItem('token');
-  const currentUsername = jwtDecode(token)?.user_name || '';
+  const currentUserId = jwtDecode(token)?.user_id || '';
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -40,7 +40,7 @@ const SinglePost = () => {
           setError(response.status);
           return;
         }
-        setIsAuthor(jwtDecode(token).user_name === response.data.posts.author_name);
+        setIsAuthor(jwtDecode(token).user_id === response.data.posts.author_id);
       } catch (err) {
         setError(err.response?.status || 500);
         console.error('게시물을 불러오는 중 오류가 발생했습니다:', err);
@@ -73,7 +73,7 @@ const SinglePost = () => {
     try {
       const response = await axios.post(`${backendURI}/community/writeComment`, {
         post_id: post_id,
-        author_name: jwtDecode(token).user_name,
+        author_id: jwtDecode(token).user_id,
         content: commentContent,
         token: localStorage.getItem('token')
       }, {
@@ -285,7 +285,7 @@ const SinglePost = () => {
                   ) : (
                     <p>{comment.content}</p>
                   )}
-                  {currentUsername === comment.author_name && editedComment.id !== comment._id && (
+                  {currentUserId === comment.author_id && editedComment.id !== comment._id && (
                     <div className="mt-2">
                       <button
                         className="btn btn-warning btn-sm me-2"
