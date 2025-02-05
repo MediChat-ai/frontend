@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import Navbar from '../../components/Navbar';
 import useTitle from '../../hooks/useTitle';
+import NotFound from '../404';
 
 const backendURI = process.env.REACT_APP_BACKEND_URI;
 
@@ -12,7 +13,31 @@ const WritePost = () => {
   const navigate = useNavigate();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+	const [error, setError] = useState(null);
   const token = localStorage.getItem('token');
+
+  useEffect(() => {
+		const fetchPosts = async () => {
+			try {
+				const response = await axios.get(`${backendURI}/community/getPostList?board_id=${_id}`, {
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				});
+				if (response.status >= 400) {
+          setError(response.status);
+          return;
+        }
+			} catch (err) {
+				setError(err.response?.status || 500);
+				console.error('게시물을 불러오는 중 오류가 발생했습니다:', err);
+			}
+		};
+		fetchPosts();
+	}, [token, _id]);
+
+	if (error === 404 || error === 500)
+    return <NotFound />;
 
   const handleSubmit = async (e) => {
     e.preventDefault();

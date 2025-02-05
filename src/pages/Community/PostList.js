@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import Navbar from '../../components/Navbar';
 import '../../assets/css/PostList.css'
 import useTitle from '../../hooks/useTitle';
+import NotFound from '../404';
 
 const backendURI = process.env.REACT_APP_BACKEND_URI;
 
@@ -12,6 +13,7 @@ const PostList = () => {
 	const { _id } = useParams();
 	const [posts, setPosts] = useState([]);
 	const [boardName, setBoardName] = useState('');
+	const [error, setError] = useState(null);
 
 	const token = localStorage.getItem('token');
 
@@ -23,15 +25,23 @@ const PostList = () => {
 						Authorization: `Bearer ${token}`,
 					},
 				});
+				if (response.status >= 400) {
+          setError(response.status);
+          return;
+        }
 				if (response.data.message === '게시물 목록을 성공적으로 불러왔습니다.')
 					setPosts(response.data.posts.reverse());
 				setBoardName(response.data.board_name);
 			} catch (err) {
+				setError(err.response?.status || 500);
 				console.error('게시물을 불러오는 중 오류가 발생했습니다:', err);
 			}
 		};
 		fetchPosts();
 	}, [token, _id]);
+
+	if (error === 404 || error === 500)
+    return <NotFound />;
 
 	return (
 		<div>

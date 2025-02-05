@@ -5,6 +5,7 @@ import Navbar from '../../components/Navbar';
 import { jwtDecode } from 'jwt-decode';
 import '../../assets/css/loading.css'
 import useTitle from '../../hooks/useTitle';
+import NotFound from '../404';
 
 const backendURI = process.env.REACT_APP_BACKEND_URI;
 
@@ -17,6 +18,8 @@ const SinglePost = () => {
   const [editedPost, setEditedPost] = useState({ title: '', content: '' });
   const [editedComment, setEditedComment] = useState({ id: '', content: '' });
   const [isAuthor, setIsAuthor] = useState(false);
+  const [error, setError] = useState(null);
+
   const token = localStorage.getItem('token');
   const currentUsername = jwtDecode(token)?.user_name || '';
 
@@ -33,8 +36,13 @@ const SinglePost = () => {
           title: response.data.posts.post_title,
           content: response.data.posts.post_content,
         });
+        if (response.status >= 400) {
+          setError(response.status);
+          return;
+        }
         setIsAuthor(jwtDecode(token).user_name === response.data.posts.author_name);
       } catch (err) {
+        setError(err.response?.status || 500);
         console.error('게시물을 불러오는 중 오류가 발생했습니다:', err);
       }
     };
@@ -176,6 +184,9 @@ const SinglePost = () => {
       console.error('댓글 수정 중 오류가 발생했습니다:', err);
     }
   };
+
+  if (error === 404 || error === 500)
+    return <NotFound />;
 
   if (!post) return (
     <div class="spinner">
