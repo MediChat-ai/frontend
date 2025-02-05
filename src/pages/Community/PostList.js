@@ -23,7 +23,8 @@ const PostList = () => {
 						Authorization: `Bearer ${token}`,
 					},
 				});
-				setPosts(response.data.posts.reverse());
+				if (response.data.message === '게시물 목록을 성공적으로 불러왔습니다.')
+					setPosts(response.data.posts.reverse());
 				setBoardName(response.data.board_name);
 			} catch (err) {
 				console.error('게시물을 불러오는 중 오류가 발생했습니다:', err);
