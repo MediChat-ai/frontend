@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from 'axios';
 import { GoogleLogin } from '@react-oauth/google';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -17,26 +17,8 @@ const backendURI = process.env.REACT_APP_BACKEND_URI;
 
 const Login = () => {
   useTitle('MediChat - 로그인');
-  const { naver } = window;
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
-  const CLIENT_ID = process.env.REACT_APP_NAVER_CLIENT_ID;
-  const REDIRECT_URI = process.env.REACT_APP_NAVER_REDIRECT_URI;
-
-  // useEffect(() => {
-  //   const naverLogin = new naver.LoginWithNaverId({
-  //     clientId: CLIENT_ID,
-  //     callbackUrl: REDIRECT_URI,
-  //     isPopup: 0,
-  //     loginButton: {
-  //       color: "green",
-  //       type: 3,
-  //       height: 50,
-  //     },
-  //   });
-  //   naverLogin.init();
-  // },[naver, CLIENT_ID, REDIRECT_URI]);
-
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
@@ -47,7 +29,6 @@ const Login = () => {
 
       if (response.status === 200) {
         localStorage.setItem('token', response.data.token);
-        alert('로그인 성공!');
         window.location.href = '/';
       }
       else if (response.status === 401)
@@ -111,7 +92,6 @@ const Login = () => {
                         fetchBasicProfile={false}
                       />
                       <br />
-                      {/* <div id="naverIdLogin" /> */}
                     </div>
                   </div>
                 </div>

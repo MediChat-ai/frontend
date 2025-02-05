@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from 'axios';
+import { GoogleLogin } from '@react-oauth/google';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import 'jquery/src/jquery';
@@ -87,6 +88,23 @@ const Register = () => {
     }
   };
 
+  const handleGoogleLogin = async (credentialResponse) => {
+    const { credential } = credentialResponse;
+
+    try {
+      const res = await axios.post(`${backendURI}/users/oauth/google`, { accessToken: credential });
+      localStorage.setItem('token', res.data.token);
+      window.location.href = '/';
+    } catch (error) {
+      console.error('로그인 실패:', error.response ? error.response.data : error.message);
+      alert('로그인 실패:', error.response ? error.response.data : error.message);
+    }
+  };
+
+  const handleFailure = (error) => {
+    alert('구글 로그인 실패:', error);
+  };
+
   return (
     <div>
       <Navbar />
@@ -152,6 +170,21 @@ const Register = () => {
                     </div>
                     <a href="/login"><p className="text-muted">이미 가입하셨나요?</p></a>
                   </form>
+                </div>
+                <div className="social-login-buttons mt-4" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  <span className="text-muted mb-3" style={{ fontSize: '14px' }}>소셜 계정으로 간편하게 로그인하세요!</span>
+                  <div style={{ display: 'block', gap: '30px' }}>
+                    <GoogleLogin
+                      buttonText=""
+                      onSuccess={handleGoogleLogin}
+                      onFailure={handleFailure}
+                      cookiePolicy={'single_host_origin'}
+                      uxMode="popup"
+                      isSignedIn={false}
+                      fetchBasicProfile={false}
+                    />
+                    <br />
+                  </div>
                 </div>
               </div>
             </div>

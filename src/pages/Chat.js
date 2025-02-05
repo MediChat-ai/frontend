@@ -15,11 +15,6 @@ import Navbar from '../components/Navbar';
 import useTitle from '../hooks/useTitle';
 
 const backendURI = process.env.REACT_APP_BACKEND_URI;
-
-const RUNPOD_API_KEY = process.env.REACT_APP_RUNPOD_API_KEY;
-const RUNPOD_ENDPOINT_ID = process.env.REACT_APP_RUNPOD_ENDPOINT_ID;
-const BASE_URL = `https://api.runpod.ai/v2/${RUNPOD_ENDPOINT_ID}/openai/v1`;
-const MODEL_NAME = process.env.REACT_APP_MODEL_NAME;
 const GROQ_API_KEY = process.env.REACT_APP_GROQ_API_KEY;
 
 const Chat = () => {
@@ -29,8 +24,7 @@ const Chat = () => {
   ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
-  const [selectedModel, setSelectedModel] = useState('빠르지만 정확성이 떨어질 수 있음');
-  const [modelName, setModelName] = useState(1); // 초기 모델
+  const [selectedModel, setSelectedModel] = useState('gemma2-9b-it');
   const chatBoxRef = useRef(null);
 
   useEffect(() => {
@@ -62,43 +56,23 @@ const Chat = () => {
 
     try {
       let aiResponse = '';
-
-      if (modelName === 0) {
-        const response = await axios.post(
-          `${BASE_URL}/chat/completions`,
-          {
-            model: MODEL_NAME,
-            messages: [{ role: "user", content: input }],
-            temperature: 0,
-            max_tokens: 512
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${RUNPOD_API_KEY}`,
-              "Content-Type": "application/json"
-            }
+      const groqResponse = await axios.post(
+        `https://api.groq.com/openai/v1/chat/completions`,
+        {
+          model: selectedModel,
+          messages: [
+            { role: "system", content: "당신은 친절한 의료 상담 AI입니다. 질문에 대해 정확하고 도움이 되는 답변을 제공해야 합니다. 한국어로 답변하세요." },
+            { role: "user", content: input }
+          ]
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${GROQ_API_KEY}`,
+            "Content-Type": "application/json"
           }
-        );
-        aiResponse = response.data.choices[0].message.content;
-      } else if (modelName === 1) {
-        const groqResponse = await axios.post(
-          'https://api.groq.com/openai/v1/chat/completions',
-          {
-            model: "gemma2-9b-it",
-            messages: [
-              { role: "system", content: "당신은 친절한 의료 상담 AI입니다. 질문에 대해 정확하고 도움이 되는 답변을 제공해야 합니다. 한국어로 답변하세요." },
-              { role: "user", content: input }
-            ]
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${GROQ_API_KEY}`,
-              "Content-Type": "application/json"
-            }
-          }
-        );
-        aiResponse = groqResponse.data.choices[0].message.content;
-      }
+        }
+      );
+      aiResponse = groqResponse.data.choices[0].message.content;
 
       setMessages((prevMessages) => [
         ...prevMessages,
@@ -125,11 +99,6 @@ const Chat = () => {
 
   const handleModelChange = (model) => {
     setSelectedModel(model);
-    if (model === '정확하지만 느림') {
-      setModelName(0);
-    } else if (model === '빠르지만 정확성이 떨어질 수 있음') {
-      setModelName(1);
-    }
   };
 
   return (
@@ -147,11 +116,29 @@ const Chat = () => {
             {selectedModel}
           </button>
           <ul className="dropdown-menu" aria-labelledby="modelDropdown">
-            <li><button className="dropdown-item" onClick={() => handleModelChange('정확하지만 느림')}>정확하지만 느림</button></li>
-            <li><button className="dropdown-item" onClick={() => handleModelChange('빠르지만 정확성이 떨어질 수 있음')}>빠르지만 정확성이 떨어질 수 있음</button></li>
+            <li><button className="dropdown-item" onClick={() => handleModelChange('gemma2-9b-it')}>gemma2-9b-it</button></li>
+            <li><button className="dropdown-item" onClick={() => handleModelChange('deepseek-r1-distill-llama-70b')}>deepseek-r1-distill-llama-70b</button></li>
+            <li><button className="dropdown-item" onClick={() => handleModelChange('llama3-8b-8192')}>llama3-8b-8192</button></li>
+            <li><button className="dropdown-item" onClick={() => handleModelChange('llama-3.3-70b-specdec')}>llama-3.3-70b-specdec</button></li>
+            <li><button className="dropdown-item" onClick={() => handleModelChange('mixtral-8x7b-32768')}>mixtral-8x7b-32768</button></li>
           </ul>
         </div>
-
+        <div className="alert alert-warning alert-dismissible fade show" role="alert">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            className="bi bi-exclamation-triangle-fill flex-shrink-0 me-2"
+            viewBox="0 0 16 16"
+            role="img"
+            aria-label="Warning:"
+          >
+            <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+          </svg>
+          기존의 '정확하지만 느림' 모델인 MediChat은 현재 지원되지 않습니다.
+          <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
         <div
           className="chat-box p-3 bg-light flex-grow-1"
           ref={chatBoxRef}
