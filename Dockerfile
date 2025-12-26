@@ -1,25 +1,15 @@
-FROM ubuntu:22.04
+FROM node:20-bullseye AS build
 
-RUN mkdir /medichat-frontend
-WORKDIR /medichat-frontend
-EXPOSE 3000
+WORKDIR /app
 
-RUN apt-get update -y
-RUN apt-get upgrade -y
-RUN apt-get install wget npm -y
-RUN npm cache clean -f
-RUN npm install -g n
-RUN n lts
-RUN npm install -g npm
-RUN npm i -g yarn
+COPY package.json yarn.lock* package-lock.json* ./
+RUN corepack enable && yarn install --frozen-lockfile || npm install
 
+COPY . .
+RUN yarn build || npm run build
 
-COPY . /medichat-frontend
-RUN yarn
-RUN npm i -S serve
-RUN yarn build
-
-RUN export PATH="$(npm bin -g):$PATH"
-RUN export PATH="$PATH:$(yarn global bin)"
-
-CMD ["npx", "serve", "-s", "build"]
+FROM nginx:1.27-alpine
+WORKDIR /usr/share/nginx/html
+COPY --from=build /app/dist ./
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
