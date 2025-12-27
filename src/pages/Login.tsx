@@ -53,9 +53,8 @@ const Login = () => {
   return (
     <section className="auth-grid">
       <div className="glass-panel auth-card">
-        <p className="chip" style={{ width: 'fit-content' }}>다시 만나서 반가워요</p>
-        <h2>투명한 로그인</h2>
-        <p style={{ color: 'var(--muted)', marginTop: 4 }}>한 번의 로그인으로 챗봇 · 병원 · 커뮤니티를 이어보세요.</p>
+        <h2>MediChat 계정에 로그인하세요</h2>
+        <p style={{ color: 'var(--muted)', marginTop: 4 }}>하나의 계정으로 상담 기록, 병원 정보, 커뮤니티 활동을 모두 이어갈 수 있습니다.</p>
         <form onSubmit={handleLogin}>
           <div className="form-field">
             <label htmlFor="userId">아이디</label>
@@ -72,23 +71,41 @@ const Login = () => {
               required
             />
           </div>
-          <button className="primary" type="submit" disabled={loading}>
-            {loading ? '로그인 중...' : '로그인'}
-          </button>
+          <br />
+          <div className="d-flex justify-content-center">
+            <button
+              className="btn"
+              type="submit"
+              disabled={loading}
+              style={{
+                background: 'rgba(113,243,166,0.85)',
+                border: '1px solid rgba(113,243,166,0.4)',
+                color: '#021409',
+                fontWeight: 600,
+                borderRadius: '10px',
+                padding: '8px 16px',
+                minWidth: '140px',
+                width: 'auto'
+              }}
+            >
+              {loading ? '로그인 중...' : '로그인'}
+            </button>
+          </div>
         </form>
-        <div className="divider">또는</div>
-        <GoogleLogin onSuccess={handleGoogleLogin} onError={() => alert('구글 로그인 실패')} useOneTap={false} />
-        <p style={{ color: 'var(--muted)' }}>
-          아직 계정이 없나요? <a href="/register">지금 가입하기</a>
+
+        <div className="d-flex align-items-center gap-3 my-4">
+          <hr className="flex-grow-1" style={{ borderColor: 'rgba(255,255,255,0.1)' }} />
+          <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.85rem' }}>또는</span>
+          <hr className="flex-grow-1" style={{ borderColor: 'rgba(255,255,255,0.1)' }} />
+        </div>
+
+        <div className="d-flex justify-content-center">
+          <GoogleLogin onSuccess={handleGoogleLogin} onError={() => alert('구글 로그인 실패')} useOneTap={false} width="100%" />
+        </div>
+
+        <p className="text-center mt-4 mb-0" style={{ color: 'var(--muted)' }}>
+          아직 계정이 없나요? <a href="/register" style={{ color: 'rgb(113,243,166)', textDecoration: 'none' }}>지금 가입하기</a>
         </p>
-      </div>
-      <div className="glass-panel story-card">
-        <h3>로그인하면</h3>
-        <ul>
-          <li>상담 기록을 기반으로 모델이 더 정밀하게 학습합니다.</li>
-          <li>관심 병원과 커뮤니티 글을 저장할 수 있습니다.</li>
-          <li>안전한 토큰 기반 인증으로 세션이 보호됩니다.</li>
-        </ul>
       </div>
     </section>
   );

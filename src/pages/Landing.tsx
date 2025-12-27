@@ -47,7 +47,7 @@ const Landing: React.FC = () => {
             ) : (
               <>
                 <a href="/login" className="btn btn-lg px-4" style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff', backdropFilter: 'blur(10px)' }}>로그인</a>
-                <a href="/register" className="btn btn-lg px-4" style={{ background: 'rgba(25,215,122,0.85)', border: '1px solid rgba(25,215,122,0.4)', color: '#021409' }}>회원 가입</a>
+                <a href="/register" className="btn btn-lg px-4" style={{ background: 'rgba(113,243,166,0.85)', border: '1px solid rgba(113,243,166,0.4)', color: '#021409' }}>회원 가입</a>
               </>
             )}
           </div>
