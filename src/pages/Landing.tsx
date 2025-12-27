@@ -36,7 +36,7 @@ const Landing: React.FC = () => {
           background: 'linear-gradient(135deg, rgba(6,12,22,0.85), rgba(3,6,14,0.9)), url("https://images.pexels.com/photos/40568/medical-appointment-doctor-healthcare-40568.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2") center / cover no-repeat',
         }}
       >
-        <div className="container px-4 py-5">
+          <div className="container hero-container px-4 py-5">
           <h1 className="display-4 fw-bold mb-3">빠르고 정확한 의료 상담,<br className="d-md-none" /> AI로 완성하다</h1>
           <p className="lead mb-4" style={{ color: 'rgba(255,255,255,0.7)' }}>
             의료 특화 챗봇 MediChat은 신뢰할 수 있는 의료 경험을 제공합니다.

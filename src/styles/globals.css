@@ -321,6 +321,32 @@ button.ghost {
   border-bottom: 1px solid rgba(255,255,255,0.06);
 }
 
+/* Make the mobile navbar toggler more visible on dark backgrounds */
+.navbar-toggler {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 8px;
+}
+
+.navbar-toggler:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(25,215,122,0.12);
+}
+
+/* Replace default icon with a simple SVG using the highlight color */
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'><path stroke='%2319d77a' stroke-width='2' stroke-linecap='round' d='M4 7h22M4 15h22M4 23h22'/></svg>") !important;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 24px;
+  height: 20px;
+}
+
+@media (min-width: 992px) {
+  /* hide custom toggler styling on large screens where full nav is visible */
+  .navbar-toggler { display: none; }
+}
+
 .glass-footer {
   background: rgba(6, 10, 20, 0.28);
   backdrop-filter: blur(10px);
@@ -353,6 +379,36 @@ button.ghost {
 
 .map-tall {
   min-height: 440px;
+}
+
+/* Hero container sizing: wider on large screens, match other containers on mobile */
+.hero-container {
+  width: min(1320px, 100%);
+  margin: 0 auto;
+  padding-inline: clamp(16px, 5vw, 48px);
+}
+
+@media (max-width: 768px) {
+  .hero-container {
+    width: 100%;
+    max-width: 100%;
+    padding-inline: clamp(16px, 5vw, 48px);
+  }
+}
+
+/* Make the hero section wider by removing Bootstrap horizontal margins
+   and ensuring consistent padding. This overrides the `mx-3 mx-md-5` classes. */
+section.glass-hero.rounded-hero.hero-image {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding-inline: clamp(16px, 5vw, 48px);
+}
+
+@media (max-width: 576px) {
+  /* On very small screens keep the hero matching other container widths */
+  section.glass-hero.rounded-hero.hero-image {
+    padding-inline: 16px;
+  }
 }
 
 .footer-links {
