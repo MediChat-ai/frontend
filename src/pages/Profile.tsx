@@ -104,9 +104,24 @@ const Profile = () => {
             <label htmlFor="nickname">새 닉네임</label>
             <input id="nickname" value={nicknameInput} onChange={(e) => setNicknameInput(e.target.value)} required />
           </div>
-          <button className="primary" type="submit">
-            닉네임 저장
-          </button>
+          <br />
+          <div className="d-flex justify-content-start">
+            <button
+              className="btn"
+              type="submit"
+              style={{
+                background: 'rgba(113,243,166,0.85)',
+                border: '1px solid rgba(113,243,166,0.4)',
+                color: '#021409',
+                fontWeight: 600,
+                borderRadius: '10px',
+                padding: '8px 16px',
+                minWidth: '140px'
+              }}
+            >
+              닉네임 저장
+            </button>
+          </div>
         </form>
       </div>
       {authProvider === 'local' && (
@@ -133,6 +148,7 @@ const Profile = () => {
                 required
               />
             </div>
+            <br />
             <button className="secondary" type="submit">
               비밀번호 저장
             </button>
