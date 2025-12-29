@@ -1,6 +1,41 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 :root {
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+}
+
+/* Reduce container border-radius for a less rounded, more modern look */
+.glass-panel,
+.card,
+.glass-card,
+.app-footer,
+.rounded-hero,
+.hero-image,
+.pulse,
+.comment-card,
+.story-card,
+.community-card,
+.nav-shell,
+.menu-toggle,
+.brand-icon {
+  border-radius: var(--radius-md) !important;
+}
+
+/* Keep some elements slightly more rounded for emphasis */
+.hero-image.rounded-hero {
+  border-radius: var(--radius-md) !important;
+}
+
+/* Buttons inside panels should match the container radius */
+.glass-panel button,
+.card button {
+  border-radius: var(--radius-md) !important;
+}
+
+
+:root {
   --bg: #03050c;
   --bg-accent: #090f1c;
   --glass: rgba(7, 13, 24, 0.7);
@@ -267,7 +302,7 @@ button.ghost {
 .card {
   background: rgba(8, 13, 24, 0.6) !important;
   border: 1px solid rgba(255, 255, 255, 0.05) !important;
-  border-radius: 22px !important;
+  border-radius: var(--radius-md) !important;
   color: var(--text) !important;
   box-shadow: 0 15px 50px rgba(0, 0, 0, 0.35);
 }
@@ -364,7 +399,7 @@ button.ghost {
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.08) !important;
-  border-radius: 20px !important;
+  border-radius: var(--radius-md) !important;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35) !important;
 }
 
@@ -717,12 +752,26 @@ textarea {
     transform: translateY(-2px);
   }
 
+  /* Inputs and selects: fixed height to match hospital search inputs (44px) */
   input,
-  select,
+  select {
+    width: 100%;
+    height: 44px;
+    padding: 8px 12px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: rgba(9, 18, 41, 0.8);
+    color: var(--text);
+    outline: none;
+    transition: border 0.2s ease, box-shadow 0.2s ease;
+    box-sizing: border-box;
+  }
+
+  /* Textareas remain multi-line but inherit similar visual style */
   textarea {
     width: 100%;
-    padding: 14px 16px;
-    border-radius: 18px;
+    padding: 12px 16px;
+    border-radius: 12px;
     border: 1px solid var(--border);
     background: rgba(9, 18, 41, 0.8);
     color: var(--text);

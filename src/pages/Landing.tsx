@@ -120,7 +120,7 @@ const Landing: React.FC = () => {
       </section>
 
       {/* Stats Section */}
-      <section className="py-5 mx-3 mx-md-5 my-4 text-white" style={{ background: 'rgba(25,215,122,0.15)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', border: '1px solid rgba(113,243,166,0.2)', borderRadius: '20px' }}>
+      <section className="py-5 mx-3 mx-md-5 my-4 text-white" style={{ background: 'rgba(25,215,122,0.15)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', border: '1px solid rgba(113,243,166,0.2)', borderRadius: '12px' }}>
         <div className="container">
           <div className="row text-center">
             <div className="col-md-4 mb-4 mb-md-0">
@@ -214,7 +214,7 @@ const Landing: React.FC = () => {
                 loading="lazy"
                 src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDfKbBYd-RVuKhOO1AS9cmgn5p616kvnZc&q=%EA%B0%80%EC%B2%9C%EB%8C%80%ED%95%99%EA%B5%90+%EA%B8%80%EB%A1%9C%EB%B2%8C%EC%BA%A0%ED%8D%BC%EC%8A%A4&zoom=14"
                 className="w-100"
-                style={{ height: '473.02px', borderRadius: '20px', border: '1px solid rgba(255,255,255,0.1)' }}
+                style={{ height: '473.02px', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.1)' }}
               />
             </div>
             <div className="col-lg-6">
