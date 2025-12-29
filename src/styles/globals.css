@@ -566,6 +566,74 @@ section.glass-hero.rounded-hero.hero-image {
   }
 }
 
+/* Hospital search layout */
+.hospital-search-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+/* Inputs/select: match height and border-radius */
+.hospital-search-form .hospital-input {
+  flex: 1 1 260px;
+  min-width: 160px;
+  height: 44px;
+  border-radius: 12px;
+  padding: 8px 12px;
+  box-sizing: border-box;
+}
+
+/* Search button: fixed height, matching radius and alignment */
+.hospital-search-form .search-btn {
+  height: 44px;
+  border-radius: 12px !important; /* override global rounded buttons */
+  padding: 8px 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 140px;
+}
+
+/* Desktop: keep fields on one line */
+@media (min-width: 992px) {
+  .hospital-search-form {
+    flex-wrap: nowrap;
+  }
+
+  .hospital-search-form .hospital-input {
+    flex: 1 1 auto;
+  }
+}
+
+/* Mobile: ensure inputs stack but button keeps same radius and full width */
+@media (max-width: 576px) {
+  .hospital-search-form .hospital-input {
+    flex-basis: 100%;
+  }
+
+  .hospital-search-form .search-btn {
+    width: 100%;
+    min-width: 0;
+    border-radius: 12px !important;
+  }
+}
+
+/* Search button style matched to signup CTA */
+.search-btn {
+  background: rgba(113,243,166,0.85);
+  border: 1px solid rgba(113,243,166,0.4);
+  color: #021409;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.search-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+
 textarea {
   font-family: inherit;
 }

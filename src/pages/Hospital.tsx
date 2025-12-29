@@ -88,9 +88,9 @@ const Hospital = () => {
         <p style={{ color: 'var(--muted)' }}>
           진료 과목과 병원명을 조합하면 가장 가까운 선택지를 바로 확인할 수 있습니다.
         </p>
-        <form style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }} onSubmit={handleSearch}>
-          <input value={keyword} onChange={(e) => setKeyword(e.target.value)} placeholder="병원 이름" />
-          <select value={subject} onChange={(e) => setSubject(e.target.value)}>
+        <form className="hospital-search-form" onSubmit={handleSearch}>
+          <input className="hospital-input" value={keyword} onChange={(e) => setKeyword(e.target.value)} placeholder="병원 이름" />
+          <select className="hospital-input" value={subject} onChange={(e) => setSubject(e.target.value)}>
             <option value="">진료 과목 전체</option>
             {subjectCodes.map((item) => (
               <option key={item.code} value={item.code}>
@@ -98,7 +98,7 @@ const Hospital = () => {
               </option>
             ))}
           </select>
-          <button className="primary" type="submit" disabled={loading}>
+          <button className="btn search-btn" type="submit" disabled={loading}>
             {loading ? '검색 중...' : '검색'}
           </button>
         </form>
