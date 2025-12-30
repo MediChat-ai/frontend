@@ -1184,18 +1184,25 @@ textarea {
   flex: 1;
 }
 
-  /* Ensure message bubbles stand out on small screens */
-  @media (max-width: 768px) {
-    .bubble {
-      max-width: 85%;
-      padding: 12px 16px;
-      border-radius: 14px;
-    }
+/* Tighten bubble spacing and reset markdown element margins inside bubbles */
+.bubble {
+  line-height: 1.45;
+}
 
-    .chat-stream {
-      max-height: 55vh;
-    }
-  }
+.bubble p,
+.bubble ul,
+.bubble ol,
+.bubble pre,
+.bubble blockquote {
+  margin: 0;
+  padding: 0;
+}
+
+.bubble img {
+  display: block;
+  max-width: 100%;
+  border-radius: 8px;
+}
 
 .form-field label {
   display: block;
