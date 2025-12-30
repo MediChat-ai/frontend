@@ -4,4 +4,5 @@ export const env = {
   naverClientId: import.meta.env.VITE_NAVER_CLIENT_ID as string | undefined,
   naverRedirectUri: import.meta.env.VITE_NAVER_REDIRECT_URI as string | undefined,
   groqApiKey: import.meta.env.VITE_GROQ_API_KEY as string | undefined,
+  puterApiKey: import.meta.env.VITE_PUTER_API_KEY as string | undefined,
 };

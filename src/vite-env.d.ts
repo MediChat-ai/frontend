@@ -9,6 +9,7 @@ interface ImportMetaEnv {
   readonly VITE_RUNPOD_ENDPOINT_ID?: string;
   readonly VITE_MODEL_NAME?: string;
   readonly VITE_GROQ_API_KEY?: string;
+  readonly VITE_PUTER_API_KEY?: string;
 }
 
 interface ImportMeta {

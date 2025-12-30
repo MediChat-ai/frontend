@@ -13,12 +13,24 @@ interface ChatMessage {
   text: string;
 }
 
-const modelOptions = [
-  { id: 'gemma2-9b-it', label: 'Gemma 2 9B IT', tone: '신속 + 정확' },
-  { id: 'deepseek-r1-distill-llama-70b', label: 'DeepSeek R1 Llama 70B', tone: '심층 분석' },
-  { id: 'llama3-8b-8192', label: 'Llama3 8B 8k', tone: '경량/모바일' },
-  { id: 'llama-3.3-70b-specdec', label: 'Llama 3.3 70B SpecDec', tone: '장문 상담' },
-  { id: 'mixtral-8x7b-32768', label: 'Mixtral 8x7B', tone: '멀티 토픽' }
+interface ModelOption {
+  id: string;
+  label: string;
+  description: string;
+}
+
+const modelOptions: ModelOption[] = [
+  { id: 'llama-3.3-70b-versatile', label: 'Llama 3.3 70B', description: '범용 · 고성능' },
+  { id: 'llama-3.1-8b-instant', label: 'Llama 3.1 8B', description: '빠른 응답' },
+  { id: 'meta-llama/llama-4-maverick-17b-128e-instruct', label: 'Llama 4 Maverick', description: '최신 · 지시형' },
+  { id: 'meta-llama/llama-4-scout-17b-16e-instruct', label: 'Llama 4 Scout', description: '탐색 · 분석' },
+  { id: 'groq/compound', label: 'Groq Compound', description: '복합 추론' },
+  { id: 'groq/compound-mini', label: 'Groq Compound Mini', description: '경량 추론' },
+  { id: 'moonshotai/kimi-k2-instruct', label: 'Kimi K2', description: '다국어 지원' },
+  { id: 'openai/gpt-oss-120b', label: 'GPT OSS 120B', description: '대형 모델' },
+  { id: 'openai/gpt-oss-20b', label: 'GPT OSS 20B', description: '중형 모델' },
+  { id: 'qwen/qwen3-32b', label: 'Qwen3 32B', description: '중국어 특화' },
+  { id: 'allam-2-7b', label: 'Allam 2 7B', description: '아랍어 특화' },
 ];
 
 const Chat = () => {
@@ -62,7 +74,7 @@ const Chat = () => {
   const sendMessage = async () => {
     if (!input.trim() || loading) return;
     if (!env.groqApiKey) {
-      alert('GROQ API 키가 설정되지 않았습니다. .env 파일을 확인하세요.');
+      setError('GROQ API 키가 설정되지 않았습니다. .env 파일을 확인하세요.');
       return;
     }
 
@@ -120,18 +132,20 @@ const Chat = () => {
     }
   };
 
+  const activeModel = modelOptions.find((model) => model.id === selectedModel);
+
   return (
     <section className="chat-page">
       <div className="glass-panel chat-panel">
         <div className="model-selector">
           <div>
             <p style={{ margin: 0, color: 'var(--muted)' }}>선택된 모델</p>
-            <h3 style={{ margin: '4px 0' }}>{modelOptions.find((model) => model.id === selectedModel)?.label}</h3>
+            <h3 style={{ margin: '4px 0' }}>{activeModel?.label ?? '모델 선택'}</h3>
           </div>
           <select value={selectedModel} onChange={(e) => setSelectedModel(e.target.value)}>
             {modelOptions.map((model) => (
               <option key={model.id} value={model.id}>
-                {model.label} · {model.tone}
+                {model.label} · {model.description}
               </option>
             ))}
           </select>
