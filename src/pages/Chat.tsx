@@ -47,6 +47,9 @@ const Chat = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const streamRef = useRef<HTMLDivElement>(null);
+  const [isComposing, setIsComposing] = useState(false);
+  const pendingSendRef = useRef(false);
+  const lastSentAtRef = useRef<number | null>(null);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -72,7 +75,13 @@ const Chat = () => {
   }, [messages]);
 
   const sendMessage = async () => {
+    // prevent duplicate sends from quick successive events (IME timing, Enter key race)
+    const last = lastSentAtRef.current || 0;
+    if (Date.now() - last < 700) return;
+
     if (!input.trim() || loading) return;
+    // mark this send time after validating input so we don't block on empty submissions
+    lastSentAtRef.current = Date.now();
     if (!env.groqApiKey) {
       setError('GROQ API 키가 설정되지 않았습니다. .env 파일을 확인하세요.');
       return;
@@ -89,33 +98,88 @@ const Chat = () => {
     setError(null);
 
     try {
-      const response = await axios.post(
-        'https://api.groq.com/openai/v1/chat/completions',
-        {
+      // Append a placeholder assistant message that we'll update incrementally
+      const assistantId = crypto.randomUUID();
+      setMessages((prev) => [
+        ...prev,
+        { id: assistantId, role: 'assistant', text: '' }
+      ]);
+
+      const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${env.groqApiKey}`,
+          'Content-Type': 'application/json',
+          Accept: 'text/event-stream'
+        },
+        body: JSON.stringify({
           model: selectedModel,
           messages: [
             { role: 'system', content: '당신은 친절한 한국어 의료 상담가입니다. 의학적 안전 문구를 포함해 안내하세요.' },
             { role: 'user', content: userMessage.text }
           ],
-          temperature: 0.4
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${env.groqApiKey}`,
-            'Content-Type': 'application/json'
+          temperature: 0.4,
+          max_completion_tokens: 1024,
+          top_p: 1,
+          stream: true
+        })
+      });
+
+      if (!res.ok || !res.body) {
+        throw new Error('스트리밍 응답을 열 수 없습니다.');
+      }
+
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = '';
+      let finished = false;
+
+      while (!finished) {
+        const { value, done } = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, { stream: true });
+
+        const lines = buffer.split(/\r?\n/);
+        buffer = lines.pop() || '';
+
+        for (const rawLine of lines) {
+          const line = rawLine.trim();
+          if (!line) continue;
+
+          let payload = line;
+          if (payload.startsWith('data:')) payload = payload.slice(5).trim();
+          if (!payload) continue;
+          if (payload === '[DONE]') {
+            finished = true;
+            break;
+          }
+
+          try {
+            const parsed = JSON.parse(payload);
+            const delta = parsed?.choices?.[0]?.delta;
+            const chunk = delta?.content || delta?.text || parsed?.choices?.[0]?.text || parsed?.result?.message?.content || '';
+            if (chunk) {
+              setMessages((prev) => prev.map((m) => (m.id === assistantId ? { ...m, text: m.text + String(chunk) } : m)));
+            }
+          } catch (e) {
+            // Not JSON — append raw text as fallback
+            setMessages((prev) => prev.map((m) => (m.id === assistantId ? { ...m, text: m.text + payload } : m)));
           }
         }
-      );
+      }
 
-      const assistantText = response.data.choices?.[0]?.message?.content?.trim();
-      setMessages((prev) => [
-        ...prev,
-        {
-          id: crypto.randomUUID(),
-          role: 'assistant',
-          text: assistantText || '응답을 생성하지 못했습니다. 다시 시도해 주세요.'
+      // Flush any remaining buffer
+      if (buffer.trim()) {
+        try {
+          const parsed = JSON.parse(buffer.trim());
+          const chunk = parsed?.choices?.[0]?.delta?.content || parsed?.choices?.[0]?.text || parsed?.result?.message?.content || '';
+          if (chunk) {
+            setMessages((prev) => prev.map((m) => (m.id === assistantId ? { ...m, text: m.text + String(chunk) } : m)));
+          }
+        } catch (_) {
+          setMessages((prev) => prev.map((m) => (m.id === assistantId ? { ...m, text: m.text + buffer } : m)));
         }
-      ]);
+      }
     } catch (err) {
       console.error(err);
       setError('AI 응답을 가져오지 못했습니다. 잠시 후 다시 시도해 주세요.');
@@ -166,7 +230,35 @@ const Chat = () => {
             placeholder="증상이나 고민을 입력하세요."
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
+            onKeyDown={(e) => {
+              if (e.key !== 'Enter') return;
+              const nativeIsComposing = (e.nativeEvent as any)?.isComposing;
+
+              // If the IME composition is active, defer sending until compositionend
+              if (isComposing || nativeIsComposing) {
+                pendingSendRef.current = true;
+                return;
+              }
+
+              // Avoid duplicate sends: ignore Enter if we just sent within 700ms
+              const last = lastSentAtRef.current || 0;
+              if (Date.now() - last < 700) return;
+
+              sendMessage();
+            }}
+            onCompositionStart={() => setIsComposing(true)}
+            onCompositionEnd={() => {
+              setIsComposing(false);
+              if (pendingSendRef.current) {
+                pendingSendRef.current = false;
+                // ensure latest input value from composition is applied before sending
+                setTimeout(() => {
+                  const last = lastSentAtRef.current || 0;
+                  if (Date.now() - last < 700) return;
+                  sendMessage();
+                }, 0);
+              }
+            }}
           />
           <button className="primary" onClick={sendMessage} disabled={loading}>
             {loading ? '생성 중...' : '전송하기'}
