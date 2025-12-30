@@ -42,6 +42,8 @@
   --glass-strong: rgba(13, 22, 41, 0.92);
   --border: rgba(255, 255, 255, 0.08);
   --highlight: #19d77a;
+  --highlight-2: rgba(12, 159, 94, 0.95);
+  --highlight-3: rgba(25, 215, 122, 0.85);
   --highlight-soft: rgba(25, 215, 122, 0.25);
   --text: #f4f7ff;
   --muted: rgba(240, 244, 255, 0.72);
@@ -1143,7 +1145,33 @@ textarea {
 
 .bubble.user {
   background: linear-gradient(120deg, var(--highlight), var(--highlight-2));
-  color: #041229;
+  color: #041229; /* dark text on light gradient */
+}
+
+/* Improve chat input visibility */
+.chat-input input {
+  flex: 1;
+  background: rgba(255,255,255,0.03);
+  color: var(--text);
+  border: 1px solid rgba(255,255,255,0.06);
+  padding: 10px 12px;
+  height: 44px;
+  border-radius: 12px;
+  outline: none;
+}
+
+.chat-input input::placeholder {
+  color: rgba(244,247,255,0.5);
+}
+
+.chat-input button.primary {
+  height: 44px;
+  padding: 0 18px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #021409; /* dark label on light gradient */
 }
 
 .chat-input {
@@ -1156,18 +1184,18 @@ textarea {
   flex: 1;
 }
 
-.auth-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 24px;
-  align-items: stretch;
-}
+  /* Ensure message bubbles stand out on small screens */
+  @media (max-width: 768px) {
+    .bubble {
+      max-width: 85%;
+      padding: 12px 16px;
+      border-radius: 14px;
+    }
 
-.auth-card form {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
+    .chat-stream {
+      max-height: 55vh;
+    }
+  }
 
 .form-field label {
   display: block;
