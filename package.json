@@ -1,8 +1,11 @@
 {
   "name": "frontend",
-  "version": "0.2.0",
+  "version": "2.0.0",
+  "description": "Medichat frontend",
   "private": true,
   "type": "module",
+  "author": "D3vle0",
+  "license": "MIT",
   "scripts": {
     "dev": "NODE_OPTIONS='--localstorage-file=/tmp/localstorage' vite",
     "build": "NODE_OPTIONS='--localstorage-file=/tmp/localstorage' tsc -b && vite build",
