@@ -43,7 +43,7 @@ const Chat = () => {
     }
   ]);
   const [input, setInput] = useState('');
-  const [selectedModel, setSelectedModel] = useState(modelOptions[0].id);
+  const [selectedModel, setSelectedModel] = useState(modelOptions[3].id);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const streamRef = useRef<HTMLDivElement>(null);
@@ -204,7 +204,7 @@ const Chat = () => {
         <div className="model-selector">
           <div>
             <p style={{ margin: 0, color: 'var(--muted)' }}>선택된 모델</p>
-            <h3 style={{ margin: '4px 0' }}>{activeModel?.label ?? '모델 선택'}</h3>
+            {/* <h3 style={{ margin: '4px 0' }}>{activeModel?.label ?? '모델 선택'}</h3> */}
           </div>
           <select value={selectedModel} onChange={(e) => setSelectedModel(e.target.value)}>
             {modelOptions.map((model) => (
