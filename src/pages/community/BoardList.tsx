@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useTitle from '../../hooks/useTitle';
+import useAuthGuard from '../../hooks/useAuthGuard';
 import { api, authHeaders } from '../../lib/http';
 
 interface Board {
@@ -12,17 +13,18 @@ interface Board {
 
 const BoardList = () => {
   useTitle('MediChat - 커뮤니티');
+  const { canAccess, isChecking } = useAuthGuard({
+    loginMessage: '커뮤니티는 로그인 후 이용할 수 있습니다.',
+    sessionExpiredMessage: '세션이 만료되었습니다. 다시 로그인해 주세요.'
+  });
   const [boards, setBoards] = useState<Board[]>([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      alert('커뮤니티는 로그인 후 이용할 수 있습니다.');
-      navigate('/login');
-      return;
-    }
+    if (!canAccess) return;
+
+    setLoading(true);
 
     api
       .get('/community/getBoardList', { headers: authHeaders() })
@@ -32,7 +34,21 @@ const BoardList = () => {
         alert('게시판 목록을 불러오지 못했습니다.');
       })
       .finally(() => setLoading(false));
-  }, [navigate]);
+  }, [canAccess]);
+
+  if (isChecking) {
+    return (
+      <section style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+        <div className="glass-panel" style={{ minHeight: 200, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div className="spinner-glow" />
+        </div>
+      </section>
+    );
+  }
+
+  if (!canAccess) {
+    return null;
+  }
 
   return (
     <section style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>

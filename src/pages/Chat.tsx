@@ -1,10 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
-import axios from 'axios';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import remarkBreaks from 'remark-breaks';
 import useTitle from '../hooks/useTitle';
-import { api, authHeaders } from '../lib/http';
+import useAuthGuard from '../hooks/useAuthGuard';
 import { env } from '../config/env';
 
 interface ChatMessage {
@@ -35,6 +34,10 @@ const modelOptions: ModelOption[] = [
 
 const Chat = () => {
   useTitle('MediChat - AI 채팅');
+  const { canAccess, isChecking } = useAuthGuard({
+    loginMessage: 'AI 챗봇은 로그인 후 이용할 수 있습니다.',
+    sessionExpiredMessage: '세션이 만료되었습니다. 다시 로그인해 주세요.'
+  });
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: crypto.randomUUID(),
@@ -50,23 +53,6 @@ const Chat = () => {
   const [isComposing, setIsComposing] = useState(false);
   const pendingSendRef = useRef(false);
   const lastSentAtRef = useRef<number | null>(null);
-
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      alert('로그인이 필요합니다.');
-      window.location.href = '/login';
-      return;
-    }
-
-    api
-      .get('/users/auth', { headers: authHeaders() })
-      .catch(() => {
-        alert('세션이 만료되었습니다. 다시 로그인해 주세요.');
-        localStorage.removeItem('token');
-        window.location.href = '/login';
-      });
-  }, []);
 
   useEffect(() => {
     if (streamRef.current) {
@@ -197,6 +183,20 @@ const Chat = () => {
   };
 
   const activeModel = modelOptions.find((model) => model.id === selectedModel);
+
+  if (isChecking) {
+    return (
+      <section className="chat-page">
+        <div className="glass-panel" style={{ minHeight: 240, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div className="spinner-glow" />
+        </div>
+      </section>
+    );
+  }
+
+  if (!canAccess) {
+    return null;
+  }
 
   return (
     <section className="chat-page">

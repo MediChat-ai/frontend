@@ -1,11 +1,16 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import useTitle from '../hooks/useTitle';
+import useAuthGuard from '../hooks/useAuthGuard';
 import { api } from '../lib/http';
 import { UserTokenPayload } from '../types/auth';
 
 const Profile = () => {
   useTitle('MediChat - 프로필');
+  const { canAccess, isChecking } = useAuthGuard({
+    loginMessage: '프로필은 로그인 후 이용할 수 있습니다.',
+    sessionExpiredMessage: '세션이 만료되었습니다. 다시 로그인해 주세요.'
+  });
   const [userId, setUserId] = useState('');
   const [userName, setUserName] = useState('');
   const [authProvider, setAuthProvider] = useState<string>('local');
@@ -13,27 +18,36 @@ const Profile = () => {
   const [passwordForm, setPasswordForm] = useState({ current: '', next: '' });
 
   useEffect(() => {
+    if (!canAccess) return;
     const token = localStorage.getItem('token');
-    if (!token) {
-      alert('로그인이 필요합니다.');
-      window.location.href = '/login';
-      return;
-    }
+    if (!token) return;
 
-    api
-      .get('/users/auth', { headers: { Authorization: `Bearer ${token}` } })
-      .then(() => {
-        const decoded = jwtDecode<UserTokenPayload>(token);
-        setUserId(decoded.user_id);
-        setUserName(decoded.user_name);
-        setAuthProvider(decoded.auth_provider);
-      })
-      .catch(() => {
-        alert('세션이 만료되었습니다. 다시 로그인해 주세요.');
-        localStorage.removeItem('token');
-        window.location.href = '/login';
-      });
-  }, []);
+    try {
+      const decoded = jwtDecode<UserTokenPayload>(token);
+      setUserId(decoded.user_id);
+      setUserName(decoded.user_name);
+      setAuthProvider(decoded.auth_provider);
+    } catch (error) {
+      console.error(error);
+      localStorage.removeItem('token');
+      alert('세션 정보를 확인할 수 없습니다. 다시 로그인해 주세요.');
+      window.location.href = '/login';
+    }
+  }, [canAccess]);
+
+  if (isChecking) {
+    return (
+      <section className="profile-grid">
+        <div className="glass-panel" style={{ minHeight: 200, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div className="spinner-glow" />
+        </div>
+      </section>
+    );
+  }
+
+  if (!canAccess) {
+    return null;
+  }
 
   const handleNicknameChange = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
