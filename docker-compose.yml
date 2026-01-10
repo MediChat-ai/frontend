@@ -1,0 +1,20 @@
+services:
+  frontend:
+    image: d3vle0/medichat-frontend:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        VITE_BACKEND_URI: ${VITE_BACKEND_URI}
+        VITE_GOOGLE_CLIENT_ID: ${VITE_GOOGLE_CLIENT_ID}
+        VITE_NAVER_CLIENT_ID: ${VITE_NAVER_CLIENT_ID}
+        VITE_NAVER_REDIRECT_URI: ${VITE_NAVER_REDIRECT_URI}
+        VITE_RUNPOD_API_KEY: ${VITE_RUNPOD_API_KEY}
+        VITE_RUNPOD_ENDPOINT_ID: ${VITE_RUNPOD_ENDPOINT_ID}
+        VITE_MODEL_NAME: ${VITE_MODEL_NAME}
+        VITE_GROQ_API_KEY: ${VITE_GROQ_API_KEY}
+    env_file:
+      - .env
+    ports:
+      - "8080:80"
+    restart: unless-stopped
